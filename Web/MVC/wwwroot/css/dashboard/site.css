@@ -1,0 +1,34 @@
+﻿.timer-container {
+    position: relative;
+    width: 100px;
+    height: 100px;
+}
+
+.circle-bg {
+    stroke: #eee;
+    stroke-width: 5;
+}
+
+.circle-progress {
+    stroke: green;
+    stroke-width: 5;
+    stroke-linecap: round;
+    transform: rotate(-90deg);
+    transform-origin: center;
+    stroke-dasharray: 280;
+    stroke-dashoffset: 0;
+    transition: stroke-dashoffset 1s linear, stroke 0.3s ease;
+}
+
+.timer-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.custom-chart {
+    direction: ltr;
+}

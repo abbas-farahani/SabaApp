@@ -1,0 +1,71 @@
+﻿@model IEnumerable<Core.Domain.Entities.Role>
+
+<div class="card card-flush h-xl-100">
+	<div class="card-header pt-7">
+		@* <h3 class="card-title align-items-start flex-column">
+			<span class="card-label fw-bold text-gray-800">Most Popular Sellers</span>
+			<span class="text-gray-500 mt-1 fw-semibold fs-6">Total 424,567 deliveries</span>
+		</h3>
+		<div class="card-toolbar">
+			<div data-kt-daterangepicker="true" data-kt-daterangepicker-opens="left" class="btn btn-sm btn-light d-flex align-items-center px-4">
+				<div class="text-gray-600 fw-bold">Loading date range...</div>
+				<i class="ki-outline ki-calendar-8 text-gray-500 lh-0 fs-2 ms-2 me-0"></i>
+			</div>
+		</div> *@
+	</div>
+	<div class="card-body pt-3 pb-4">
+		<div class="table-responsive">
+			<table class="table table-row-dashed align-middle gs-0 gy-4 my-0">
+				<thead>
+					<tr class="fs-7 fw-bold text-gray-500 border-bottom-0">
+						<th class="p-0 min-w-200px">@Html.DisplayNameFor(model => model.Name)</th>
+						<th class="p-0 w-100px"></th>
+					</tr>
+				</thead>
+				<tbody>
+					@foreach (var role in Model)
+					{
+						<tr class="@Html.Raw($"row-item-{role.Id}")">
+							<td>
+								<div class="d-flex flex-column">
+									<div class="d-flex justify-content-start flex-column">
+										<a asp-action="Edit" asp-route-id="@role.Id" class="text-gray-800 fw-bold text-hover-primary mb-1 fs-6">
+											@Html.DisplayFor(modelItem => role.Name)
+										</a>
+										<span class="text-gray-500 fw-semibold d-block fs-7">@Html.DisplayFor(modelItem => role.Description)</span>
+									</div>
+								</div>
+							</td>
+							<td class="text-end">
+								@if (role.Name.ToLower() == "subscriber" || role.Name.ToLower() == "admin")
+								{
+									@* <a asp-action="Details" asp-route-id="@role.Id" class="btn btn-icon btn-bg-light btn-active-color-info btn-sm me-1" target="_blank">
+										<i class="ki-outline ki-switch fs-2"></i>
+									</a> *@
+									<span class="text-gray-500 fs-8">امکان ویرایش یا حذف وجود ندارد</span>
+								}
+								else
+								{
+									@* <a asp-action="Details" asp-route-id="@role.Id" class="btn btn-icon btn-bg-light btn-active-color-info btn-sm me-1" target="_blank">
+										<i class="ki-outline ki-switch fs-2"></i>
+									</a> *@
+									<a asp-action="Edit" asp-route-id="@role.Id" class="btn btn-icon btn-bg-light btn-active-color-warning btn-sm me-1">
+										<i class="ki-outline ki-pencil fs-2"></i>
+									</a>
+									<a href="#" data-id="@role.Id" data-action="role" class="btn btn-icon btn-bg-light btn-active-color-danger btn-sm me-1 delete-request">
+										<i class="ki-outline ki-trash fs-2"></i>
+									</a>
+								}
+
+							</td>
+						</tr>
+					}
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>
+
+@section Scripts {
+	<script src="~/js/admin/general.js"></script>
+}

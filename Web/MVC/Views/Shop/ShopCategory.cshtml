@@ -1,0 +1,53 @@
+﻿@model Core.Domain.Entities.Shop.ProductCat
+
+
+<div class="promo promo-light p-4 p-md-5 mb-5">
+	<div class="row align-items-center">
+		<div class="col-12 col-lg">
+			<h3 class="text-theme-color mb-4">@Html.Raw(Model.Label)</h3>
+			<span>@Html.Raw(Model.Description)</span>
+		</div>
+	</div>
+</div>
+@if (Model.Products != null && Model.Products.Count() > 0)
+{
+	<div class="section mb-0">
+		<div class="container">
+
+			<div class="shop row gutter-20">
+				@foreach (var product in Model.Products)
+				{
+					<div class="product col-lg-3 col-md-4 col-sm-6 col-12">
+						<div class="grid-inner">
+							<div class="product-image">
+								<a asp-action="singleproduct" asp-controller="shop" asp-route-slug="@product.Slug"><img src="@Html.Raw(product.FeaturedImage)" alt="Men Aviator Sunglasses"></a>
+								<div class="bg-overlay">
+									<div class="bg-overlay-content align-items-end justify-content-between" data-hover-animate="fadeIn" data-hover-speed="400">
+										<a href="#" class="btn btn-dark me-2" title="Add to Cart"><i class="bi-bag-plus"></i></a>
+										<a href="include/ajax/shop-item.html" class="btn btn-dark" data-lightbox="ajax" title="Quick View"><i class="bi-eye"></i></a>
+									</div>
+									<div class="bg-overlay-bg bg-transparent"></div>
+								</div>
+							</div>
+							<div class="product-desc">
+								<div class="product-title">
+									<h3>
+										<a asp-action="singleproduct" asp-controller="shop" asp-route-slug="@product.Slug">@Html.Raw(product.Title)</a>
+									</h3>
+								</div>
+								<div class="product-price">@product.Price ریال</div>
+								<div class="product-rating">
+									<i class="bi-star-fill"></i>
+									<i class="bi-star-fill"></i>
+									<i class="bi-star-fill"></i>
+									<i class="bi-star-fill"></i>
+									<i class="bi-star"></i>
+								</div>
+							</div>
+						</div>
+					</div>
+				}
+			</div>
+		</div>
+	</div>
+}

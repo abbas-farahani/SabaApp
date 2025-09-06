@@ -1,0 +1,153 @@
+﻿<header id="header" class="full-header">
+	<div id="header-wrap">
+		<div class="container">
+			<div class="header-row align-items-lg-stretch">
+
+				<!-- Logo
+				============================================= -->
+				<div id="logo">
+					<a href="/">
+						<img class="logo-default py-2" srcset="/media/corporate/logo.png, /media/corporate/logo@2x.png 2x" src="~/media/corporate/logo@2x.png" alt="Canvas Logo">
+						<img class="logo-dark py-2" srcset="/media/corporate/logo-dark.png, /media/corporate/logo-dark@2x.png 2x" src="~/media/corporate/logo-dark@2x.png" alt="Canvas Logo">
+					</a>
+				</div><!-- #logo end -->
+
+
+				<div class="header-misc">
+					<!-- Top Search
+					============================================= -->
+					<div id="top-search" class="header-misc-icon">
+						<a href="#" id="top-search-trigger"><i class="uil uil-search"></i><i class="bi-x-lg"></i></a>
+					</div><!-- #top-search end -->
+					<!-- Top Cart
+					============================================= -->
+					@* <div id="top-cart" class="header-misc-icon d-none d-sm-block">
+								<a href="#" id="top-cart-trigger"><i class="uil uil-shopping-bag"></i><span class="top-cart-number">5</span></a>
+								<div class="top-cart-content">
+									<div class="top-cart-title">
+										<h4>Shopping Cart</h4>
+									</div>
+									<div class="top-cart-items">
+										<div class="top-cart-item">
+											<div class="top-cart-item-image">
+												<a href="#"><img src="~/media/corporate/1.jpg" alt="Blue Round-Neck Tshirt"></a>
+											</div>
+											<div class="top-cart-item-desc">
+												<div class="top-cart-item-desc-title">
+													<a href="#">Blue Round-Neck Tshirt with a Button</a>
+													<span class="top-cart-item-price d-block">$19.99</span>
+												</div>
+												<div class="top-cart-item-quantity">x 2</div>
+											</div>
+										</div>
+										<div class="top-cart-item">
+											<div class="top-cart-item-image">
+												<a href="#"><img src="~/media/corporate/6.jpg" alt="Light Blue Denim Dress"></a>
+											</div>
+											<div class="top-cart-item-desc">
+												<div class="top-cart-item-desc-title">
+													<a href="#">Light Blue Denim Dress</a>
+													<span class="top-cart-item-price d-block">$24.99</span>
+												</div>
+												<div class="top-cart-item-quantity">x 3</div>
+											</div>
+										</div>
+									</div>
+									<div class="top-cart-action">
+										<span class="top-checkout-price">$114.95</span>
+										<a href="#" class="button button-3d button-small m-0">View Cart</a>
+									</div>
+								</div>
+							</div> *@<!-- #top-cart end -->
+
+				</div>
+
+				<div class="primary-menu-trigger">
+					<button class="cnvs-hamburger" type="button" title="Open Mobile Menu">
+						<span class="cnvs-hamburger-box"><span class="cnvs-hamburger-inner"></span></span>
+					</button>
+				</div>
+
+				<!-- Primary Navigation
+				============================================= -->
+				<nav class="primary-menu">
+
+					<ul class="menu-container">
+						<li class="menu-item">
+							<a class="menu-link" href="/"><div>@SharedResources.Home</div></a>
+						</li>
+						<li class="menu-item">
+							<a class="menu-link" href="/about-us"><div>@SharedResources.AboutUs</div></a>
+						</li>
+						<li class="menu-item">
+							<a class="menu-link" href="/products"><div>@SharedResources.Products</div></a>
+						</li>
+						<li class="menu-item">
+							<a class="menu-link" href="/quality-assurance"><div>@SharedResources.QualityAssurance</div></a>
+						</li>
+						<li class="menu-item">
+							<a class="menu-link" href="/target-markets"><div>@SharedResources.TargetMarkets</div></a>
+						</li>
+						<li class="menu-item">
+							<a class="menu-link" href="/why-us"><div>@SharedResources.WhyUs</div></a>
+						</li>
+						<li class="menu-item">
+							<a class="menu-link" href="/contact-us"><div>@SharedResources.ContactUs</div></a>
+						</li>
+						<li class="menu-item">
+							<a class="menu-link" href="/faq"><div>@SharedResources.FAQ</div></a>
+						</li>
+
+						@if (User.Identity.IsAuthenticated)
+						{
+							<li class="menu-item">
+								<a class="menu-link" href="#"><i class="bi-emoji-sunglasses"></i></a>
+								<ul class="sub-menu-container">
+									<li class="menu-item">
+										<a class="menu-link" asp-action="index" asp-controller="dashboard" asp-area="dashboard">
+											<div><i class="uil uil-dashboard"></i>@SharedResources.Dashboard</div>
+										</a>
+									</li>
+									@if (User.IsInRole("Admin"))
+									{
+										<li class="menu-item">
+											<a class="menu-link" asp-area="admin" asp-controller="home" asp-action="index">
+												<div><i class="uil uil-user-md"></i>@SharedResources.Admin</div>
+											</a>
+										</li>
+									}
+									<li class="menu-item">
+										<a href="#" class="menu-link logout-btn">
+											<div><i class="bi-door-open"></i>@SharedResources.Exit</div>
+										</a>
+										<form asp-area="dashboard" asp-controller="dashboard" asp-action="logout" method="post" class="logout-form py-0 d-none">
+											<a href="#" type="submit" class="menu-link">
+												<div><i class="bi-door-open"></i>@SharedResources.Exit</div>
+											</a>
+										</form>
+									</li>
+								</ul>
+							</li>
+						}
+						else
+						{
+							<li class="menu-item">
+								<a asp-action="login" asp-controller="dashboard" asp-area="dashboard" class="menu-link"><i class="uil uil-user"></i></a>
+							</li>
+						}
+
+						@await Component.InvokeAsync("LanguageSwitcher")
+
+					</ul>
+
+				</nav><!-- #primary-menu end -->
+
+				<form class="top-search-form" action="search.html" method="get">
+					<input type="text" name="q" class="form-control" value="" placeholder="Type &amp; Hit Enter.." autocomplete="off">
+				</form>
+
+			</div>
+		</div>
+	</div>
+	<div class="header-wrap-clone"></div>
+</header><!-- #header end -->

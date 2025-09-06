@@ -1,0 +1,27 @@
+﻿@model Post
+
+
+<div class="card card-flush py-4">
+	<div class="card-header">
+		<div class="card-title">
+			<h2>تصویر نوشته</h2>
+		</div>
+	</div>
+	<div class="card-body text-center pt-0">
+		<div class="image-input image-input-empty image-input-outline image-input-placeholder mb-3" data-kt-image-input="true">
+			<div class="image-input-wrapper w-150px h-150px" style="background-image: url(assets/media//stock/ecommerce/78.png)"></div>
+			<label class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow" data-kt-image-input-action="change" data-bs-toggle="tooltip" title="Change avatar">
+				<i class="ki-outline ki-pencil fs-7"></i>
+				<input type="file" name="avatar" accept=".png, .jpg, .jpeg" />
+				<input type="hidden" name="avatar_remove" />
+			</label>
+			<span class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow" data-kt-image-input-action="cancel" data-bs-toggle="tooltip" title="Cancel avatar">
+				<i class="ki-outline ki-cross fs-2"></i>
+			</span>
+			<span class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow" data-kt-image-input-action="remove" data-bs-toggle="tooltip" title="Remove avatar">
+				<i class="ki-outline ki-cross fs-2"></i>
+			</span>
+		</div>
+		<div class="text-muted fs-7">Set the product thumbnail image. Only *.png, *.jpg and *.jpeg image files are accepted</div>
+	</div>
+</div>

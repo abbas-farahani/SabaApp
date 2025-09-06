@@ -1,0 +1,81 @@
+﻿@model List<User>
+
+@if (!Model.Any())
+{
+	<h1>No Users</h1>
+}
+else
+{
+	<div class="card card-flush">
+		<div class="card-body pt-0">
+			<div class="table-responsive">
+				<table id="kt_project_users_table" class="table table-row-bordered table-row-dashed gy-4 align-middle fw-bold">
+					<thead class="fs-7 text-gray-500 text-uppercase">
+						<tr>
+							<th class="min-w-250px">نام کاربری</th>
+							<th class="min-w-150px">Date</th>
+							<th class="min-w-90px">Amount</th>
+							<th class="min-w-90px">Status</th>
+							<th class="min-w-50px text-end">Details</th>
+						</tr>
+					</thead>
+					<tbody class="fs-6">
+						@foreach (var user in Model)
+						{
+							<tr>
+								<td>
+									<div class="d-flex align-items-center">
+										<div class="me-5 position-relative">
+											@if (true)
+											{
+												<div class="symbol symbol-35px symbol-circle">
+													<span class="symbol-label bg-light-danger text-danger fw-semibold">@((user.UserName)[0])</span>
+												</div>
+												<div class="bg-success position-absolute border border-4 border-body h-15px w-15px rounded-circle translate-middle start-100 top-100 ms-n1 mt-n1"></div>
+											}
+											else
+											{
+												<div class="symbol symbol-35px symbol-circle">
+													<img alt="تصویر کاربر" src="/media/avatars/300-6.jpg" />
+												</div>
+											}
+										</div>
+										<div class="d-flex flex-column justify-content-center">
+											<a asp-controller="user" asp-action="edit" asp-route-id="@user.Id" class="mb-1 text-gray-800 text-hover-primary">@user.UserName</a>
+											<div class="fw-semibold fs-6 text-gray-500">@user.Email</div>
+										</div>
+									</div>
+								</td>
+								<td>
+									@if (user.UserRoles != null && user.UserRoles.Count > 0)
+									{
+										foreach (var role in user.UserRoles)
+										{
+											if (role.Role != null)
+											{
+												<span class="badge badge-light-success fw-bold px-4 py-3">@role.Role.Name</span>
+											}
+										}
+									}
+								</td>
+								<td>@user.PhoneNumber</td>
+								<td>
+									<span class="badge badge-light-success fw-bold px-4 py-3">Approved</span>
+								</td>
+								<td class="text-end">
+									<a asp-controller="user" asp-action="profile" asp-route-id="@user.Id" class="btn btn-light btn-sm">نمایش پروفایل</a>
+									@if (user.UserName != "admin")
+									{
+										<form asp-controller="user" asp-action="delete" asp-route-id="@user.Id" method="post">
+											<button type="submit" class="btn btn-danger">حذف</button>
+										</form>
+									}
+								</td>
+							</tr>
+						}
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+}

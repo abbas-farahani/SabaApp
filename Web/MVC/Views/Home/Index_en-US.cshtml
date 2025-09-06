@@ -1,0 +1,288 @@
+﻿@{
+	ViewData["Title"] = "Saba Trade";
+	var products = (List<Core.Domain.Entities.Shop.Product>)ViewBag.Products;
+	var articles = (List<Core.Domain.Entities.Post>)ViewBag.Articles;
+}
+
+@section Styles {
+	<link rel="stylesheet" href="~/css/corporate/swiper.css">
+}
+
+@section Slider {
+	@await Component.InvokeAsync("Slider", new { sliderId = 1 })
+
+	@* <section id="slider" class="slider-element swiper_wrapper min-vh-40 min-vh-md-75" data-autoplay="9000" data-speed="800" data-loop="true" data-grab="false">
+		<div class="slider-inner">
+
+			<div class="swiper swiper-parent">
+				<div class="swiper-wrapper">
+					<div class="swiper-slide dark">
+						<div class="container">
+							<div class="slider-caption slider-caption-center">
+								<h2 data-animate="fadeInUp">Saba Trade</h2>
+								<p class="d-none d-sm-block" data-animate="fadeInUp" data-delay="200">Harvesting Nature’s Sweetness<br />Premium Iranian dates delivered globally with passion and precision.</p>
+							</div>
+						</div>
+						<div class="video-wrap no-placeholder">
+							<video id="slide-video" poster="~/media/corporate/explore-poster.jpg" preload="auto" loop autoplay muted playsinline>
+								<source src='~/media/corporate/index-video.webm' type='video/webm'>
+								<source src='~/media/corporate/index-video.mp4' type='video/mp4'>
+							</video>
+							<div class="video-overlay" style="background-color: rgba(0,0,0,0.55);"></div>
+						</div>
+					</div>
+					<div class="swiper-slide dark">
+						<div class="container">
+							<div class="slider-caption slider-caption-center">
+								<h2 data-animate="fadeInUp">Saba Trade</h2>
+								<p class="d-none d-sm-block" data-animate="fadeInUp" data-delay="200">Harvesting Nature’s Sweetness<br />Premium Iranian dates delivered globally with passion and precision.</p>
+							</div>
+						</div>
+						<div class="swiper-slide-bg" style="background-image: url('/media/corporate/saba-trade-bg-01.jpg');"></div>
+					</div>
+				</div>
+				<div class="slider-arrow-left"><i class="icon-angle-left"></i></div>
+				<div class="slider-arrow-right"><i class="icon-angle-right"></i></div>
+				<div class="slide-number"><div class="slide-number-current"></div><span>/</span><div class="slide-number-total"></div></div>
+			</div>
+
+		</div>
+	</section> *@
+}
+<section id="content">
+	<div class="content-wrap py-0">
+		<div class="section my-0 ps-6" style="background-color: #c9c9c9;">
+			<div class="container">
+				<div class="row align-items-center">
+
+					<div class="col-lg-5">
+						<div class="heading-block">
+							<h1 class="fw-bold">Saba Trade</h1>
+						</div>
+						<p class="lead">Welcome to Saba Trade, your trusted partner for finest Iranian dates. With over 20 years of industry experience, we bring you a curated selection of Mazafati, Zahedi, Shahani, Piarom, and Rabbi dates. Our commitment to quality, authentic taste, and reliable service makes us the exporter of choice for marketplaces across the Gulf and Southeast Asia.</p>
+					</div>
+
+					<div class="col-lg-7 align-self-end">
+						<div class="position-relative overflow-hidden">
+							<img src="~/media/corporate/saba-mockup-02.jpg" data-animate="fadeInUp" data-delay="100" alt="صبا ترید">
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</div>
+
+		@* <div class="section my-0" style="background-color:#007867 !important;">
+			<div class="container">
+				<div class="row mt-4 col-mb-50">
+					<div class="col-lg-4">
+						<i class="i-plain text-white i-large bi-display inline-block mb-3"></i>
+						<div class="heading-block border-bottom-0 mb-3">
+							<h4 class="text-white">Our Story</h4>
+						</div>
+						<p class="text-white">Founded by a team with over 20 years of broad trade and industry expertise, Saba Trade was established to bring the authentic sweetness of Iranian dates to the world. We partner with certified farms in Kerman and Sistan & Baluchestan provinces, ensuring the finest raw quality at the source.</p>
+					</div>
+
+					<div class="col-lg-4">
+						<i class="i-plain text-white i-large bi-lightning-charge inline-block mb-3"></i>
+						<div class="heading-block border-bottom-0 mb-3">
+							<h4 class="text-white">Mission Statement</h4>
+						</div>
+						<p class="text-white">Our mission is to share the true taste of Iranian dates with our partners worldwide—by hand-picking only the finest dates from each harvest, offering quick, honest support, and crafting packaging that fits your needs.</p>
+					</div>
+
+					<div class="col-lg-4">
+						<i class="i-plain text-white i-large bi-sliders2-vertical inline-block mb-3"></i>
+						<div class="heading-block border-bottom-0 mb-3">
+							<h4 class="text-white">Vision Statement</h4>
+						</div>
+						<p class="text-white">Our vision is to build lasting trust with our customers by delivering premium, safe, and flavorful dates through sustainable practices and transparent processes.</p>
+					</div>
+				</div>
+			</div>
+		</div> *@
+
+		@* <div class="section my-0 ps-6">
+			<div class="container">
+				<div class="row">
+					<div class="heading-block text-center">
+						<h3>Our Values</h3>
+					</div>
+				</div>
+				<div class="row col-mb-50">
+					<div class="col-sm-6 col-lg-3">
+						<div class="feature-box fbox-sm fbox-plain" data-animate="fadeIn">
+							<div class="fbox-icon">
+								<a href="#"><i class="bi-display"></i></a>
+							</div>
+							<div class="fbox-content">
+								<h3>Integrity</h3>
+								<p>Honest sourcing and transparent communication at every step.</p>
+							</div>
+						</div>
+					</div>
+
+					<div class="col-sm-6 col-lg-3">
+						<div class="feature-box fbox-sm fbox-plain" data-animate="fadeIn" data-delay="200">
+							<div class="fbox-icon">
+								<a href="#"><i class="bi-eye"></i></a>
+							</div>
+							<div class="fbox-content">
+								<h3>Quality</h3>
+								<p>Rigorous controls from orchard to shipment, certified by ISO 22000 and HACCP.</p>
+							</div>
+						</div>
+					</div>
+
+					<div class="col-sm-6 col-lg-3">
+						<div class="feature-box fbox-sm fbox-plain" data-animate="fadeIn" data-delay="400">
+							<div class="fbox-icon">
+								<a href="#"><i class="bi-star"></i></a>
+							</div>
+							<div class="fbox-content">
+								<h3>Customer Focus</h3>
+								<p>Responsive support, flexible solutions, and on-time delivery.</p>
+							</div>
+						</div>
+					</div>
+
+					<div class="col-sm-6 col-lg-3">
+						<div class="feature-box fbox-sm fbox-plain" data-animate="fadeIn" data-delay="600">
+							<div class="fbox-icon">
+								<a href="#"><i class="uil uil-play"></i></a>
+							</div>
+							<div class="fbox-content">
+								<h3>Innovation</h3>
+								<p>Continual investment in modern facilities and logistics.</p>
+							</div>
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</div> *@
+
+		<div class="section my-0 pe-6">
+			<div class="container">
+				<div class="row align-items-center">
+
+					<div class="col-lg-7 align-self-end">
+						<div class="position-relative overflow-hidden">
+							<ul class="clients-grid row row-cols-2">
+								<li class="col"><a href="#"><img src="~/media/corporate/clients/7.png" alt="Clients"></a></li>
+								<li class="col"><a href="#"><img src="~/media/corporate/clients/8.png" alt="Clients"></a></li>
+								<li class="col"><a href="#"><img src="~/media/corporate/clients/9.png" alt="Clients"></a></li>
+								<li class="col"><a href="#"><img src="~/media/corporate/clients/10.png" alt="Clients"></a></li>
+							</ul>
+						</div>
+					</div>
+
+					<div class="col-lg-5">
+						<div class="heading-block">
+							<h1 class="fw-bold">Our Products</h1>
+						</div>
+						<p class="lead">Welcome to Saba Trade, your trusted partner for finest Iranian dates. With over 20 years of industry experience, we bring you a curated selection of Mazafati, Zahedi, Shahani, Piarom, and Rabbi dates. Our commitment to quality, authentic taste, and reliable service makes us the exporter of choice for marketplaces across the Gulf and Southeast Asia.</p>
+						<a href="/products" class="btn btn-primary">View Products</a>
+					</div>
+
+				</div>
+			</div>
+		</div>
+
+		<div class="section my-0 px-6" style="background-color: #d7d7d7;">
+			<div class="container">
+				<div class="row align-items-center">
+
+					<div class="col-lg-5">
+						<div class="heading-block">
+							<h1 class="fw-bold">Quality Assurance</h1>
+						</div>
+						<p class="lead">Welcome to Saba Trade, your trusted partner for finest Iranian dates. With over 20 years of industry experience, we bring you a curated selection of Mazafati, Zahedi, Shahani, Piarom, and Rabbi dates. Our commitment to quality, authentic taste, and reliable service makes us the exporter of choice for marketplaces across the Gulf and Southeast Asia.</p>
+					</div>
+
+					<div class="col-lg-7 align-self-end">
+						<div class="position-relative overflow-hidden">
+							<img src="~/media/corporate/dates-image.jpg" data-animate="fadeInUp" data-delay="100" alt="صبا ترید">
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</div>
+
+
+
+		@* <div class="section parallax scroll-detect dark py-6 my-0">
+			<img src="~/media/corporate/saba-trade-bg-01.jpg" class="parallax-bg">
+			<div class="heading-block text-center">
+				<h3>Our History</h3>
+			</div>
+			<div class="fslider testimonial testimonial-full text-center" data-animation="fade" data-arrows="false">
+				<div class="flexslider">
+					<div class="slider-wrap">
+						<div class="slide">
+							<div class="row flex-column text-center align-items-center gy-3">
+								<div class="col-auto pt-1"> </div>
+								<div class="col-lg-5">
+									<p class="mb-3 fs-5 font-secondary">Over 20 years of experience in diverse trade and industry sectors has shaped our commitment to excellence. In 2023, we launched Saba Trade to specialize in premium date exports, leveraging our deep network and understanding of global markets.</p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div> *@
+
+		@* <div class="section my-0 ps-6">
+			<div class="container">
+				<div class="row col-mb-30">
+					<div id="oc-images" class="owl-carousel image-carousel carousel-widget" data-items-xs="2" data-items-sm="3" data-items-lg="4" data-items-xl="5">
+
+						<div class="oc-item">
+							<a href="#"><img src="~/media/corporate/saba-mockup-02.jpg" alt="Image 1"></a>
+						</div>
+						<div class="oc-item">
+							<a href="#"><img src="~/media/corporate/saba-mockup-02.jpg" alt="Image 2"></a>
+						</div>
+						<div class="oc-item">
+							<a href="#"><img src="~/media/corporate/saba-mockup-02.jpg" alt="Image 3"></a>
+						</div>
+						<div class="oc-item">
+							<a href="#"><img src="~/media/corporate/saba-mockup-02.jpg" alt="Image 4"></a>
+						</div>
+						<div class="oc-item">
+							<a href="#"><img src="~/media/corporate/saba-mockup-02.jpg" alt="Image 5"></a>
+						</div>
+						<div class="oc-item">
+							<a href="#"><img src="~/media/corporate/saba-mockup-02.jpg" alt="Image 6"></a>
+						</div>
+						<div class="oc-item">
+							<a href="#"><img src="~/media/corporate/saba-mockup-02.jpg" alt="Image 7"></a>
+						</div>
+
+					</div>
+				</div>
+			</div>
+		</div> *@
+
+		<div class="section my-0 ps-6">
+			<div class="container">
+				<div class="row col-mb-30">
+					<div id="oc-clients" class="owl-carousel image-carousel carousel-widget" data-margin="20" data-nav="false" data-pagi="true" data-items-xs="2" data-items-sm="3" data-items-md="4" data-items-lg="5" data-items-xl="6">
+
+						<div class="oc-item"><a href="#"><img src="~/media/corporate/iso14001.jpg" alt="Certificates"></a></div>
+						<div class="oc-item"><a href="#"><img src="~/media/corporate/iso9001.jpg" alt="Certificates"></a></div>
+						<div class="oc-item"><a href="#"><img src="~/media/corporate/iso14001.jpg" alt="Certificates"></a></div>
+						<div class="oc-item"><a href="#"><img src="~/media/corporate/iso9001.jpg" alt="Certificates"></a></div>
+						<div class="oc-item"><a href="#"><img src="~/media/corporate/iso14001.jpg" alt="Certificates"></a></div>
+						<div class="oc-item"><a href="#"><img src="~/media/corporate/iso9001.jpg" alt="Certificates"></a></div>
+						<div class="oc-item"><a href="#"><img src="~/media/corporate/iso14001.jpg" alt="Certificates"></a></div>
+						<div class="oc-item"><a href="#"><img src="~/media/corporate/iso9001.jpg" alt="Certificates"></a></div>
+
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</div>
+</section>

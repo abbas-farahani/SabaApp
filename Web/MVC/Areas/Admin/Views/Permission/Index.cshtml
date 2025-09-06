@@ -1,0 +1,58 @@
+﻿@model IEnumerable<Core.Domain.Entities.Permission>
+
+<div class="card card-flush h-xl-100">
+	<div class="card-header pt-5">
+		<h3 class="card-title align-items-start flex-column">
+			<span class="card-label fw-bold text-gray-800">@ViewData["Title"]</span>
+			<span class="text-gray-500 pt-2 fw-semibold fs-6">مدیریت دسترسی‌ها</span>
+		</h3>
+		<div class="card-toolbar">
+		</div>
+	</div>
+	<div class="card-body d-flex justify-content-between flex-column py-3">
+		<div class="m-0"></div>
+		<div class="table-responsive mb-n2">
+			<table class="table table-row-dashed gs-0 gy-4">
+				<thead>
+					<tr class="fs-7 fw-bold border-0 text-gray-500">
+						<th class="min-w-300px">@Html.DisplayNameFor(model => model.Name)</th>
+						<th class="min-w-100px">@Html.DisplayNameFor(model => model.CreationTime)</th>
+						<th class="min-w-100px">@Html.DisplayNameFor(model => model.Description)</th>
+						<th class="min-w-100px">...</th>
+					</tr>
+				</thead>
+				<tbody>
+					@foreach (var permission in Model.ToList())
+					{
+						<tr class="@Html.Raw($"row-item-{permission.Id}")">
+							<td>
+								<a asp-action="Edit" asp-route-id="@permission.Id" class="text-gray-600 fw-bold text-hover-primary mb-1 fs-6">
+									@Html.Raw(permission.Name)
+								</a>
+							</td>
+							<td>
+								<span class="fw-bold text-gray-800 fs-6 me-3">@permission.CreationTime.ToString("dddd yyyy/MM/dd HH:mm:ss")</span>
+							</td>
+							<td class="d-flex align-items-center border-0">
+								<span class="fw-bold text-gray-800 fs-6 me-3">263</span>
+								<div class="progress rounded-start-0">
+									<div class="progress-bar bg-success m-0" role="progressbar" style="height: 12px;width: 166px" aria-valuenow="166" aria-valuemin="0" aria-valuemax="166px"></div>
+								</div>
+							</td>
+							<td>
+								<a href="#" data-id="@permission.Id" data-action="permission" class="btn btn-icon btn-bg-light btn-active-color-danger btn-sm me-1 delete-request">
+									<i class="ki-outline ki-trash fs-2"></i>
+								</a>
+							</td>
+						</tr>
+					}
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>
+
+
+@section Scripts {
+	<script src="~/js/admin/general.js"></script>
+}

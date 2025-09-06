@@ -1,0 +1,25 @@
+﻿<section class="page-title bg-transparent">
+	<div class="container">
+		<div class="page-title-row">
+			<div class="page-title-content">
+				<h1 class="fw-bold">@(ViewBag.Title != null ? ViewBag.Title : "صبا ترید")</h1>
+			</div>
+
+			@if (ViewBag.Breadcrumb != null)
+			{
+				List<AnchorLink> _breadcrumb = ViewBag.Breadcrumb;
+				<nav aria-label="breadcrumb">
+					<ol class="breadcrumb">
+						<li class="breadcrumb-item "><a asp-action="index" asp-controller="home">خانه</a></li>
+						@foreach (var item in _breadcrumb)
+						{
+							<li class="breadcrumb-item ps-0">
+								<a href="@item.Link" title="@item.Title" target="@item.Target">@Html.Raw(item.Text)</a>
+							</li>
+						}
+					</ol>
+				</nav>
+			}
+		</div>
+	</div>
+</section><!-- .page-title end -->

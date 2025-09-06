@@ -1,0 +1,44 @@
+﻿@model List<Core.Domain.Entities.Post>
+
+@if (Model != null && Model.Count() > 0)
+{
+	<div class="section my-0 ps-6">
+		<div class="container">
+			<div class="row posts-md col-mb-30">
+				@foreach (var article in Model)
+				{
+					var thumb = @article.PostMetas.FirstOrDefault(x => x.MetaName == "ThumbPath");
+					<div class="entry col-lg-3 col-md-4 col-sm-6 col-12">
+						<div class="grid-inner">
+							<div class="entry-image aspect-ratio-1 overflow-hidden">
+								<a asp-action="singlepost" asp-controller="home" asp-route-slug="@Html.Raw(article.Slug)" data-lightbox="image">
+									<img src="@(thumb!=null? thumb.MetaValue : "/media/svg/files/blank-image.svg")" alt="@Html.Raw(article.Title)">
+								</a>
+							</div>
+							<div class="entry-title">
+								<h2><a asp-action="singlepost" asp-controller="home" asp-route-slug="@Html.Raw(article.Slug)">@Html.Raw(article.Title)</a></h2>
+							</div>
+							<div class="entry-meta">
+								<ul>
+									<li><i class="uil uil-schedule"></i> @article.CreationTime.ToString("yyyy/MM/dd")</li>
+									<li>
+										<a asp-action="singlepost" asp-controller="home" asp-route-slug="@Html.Raw(article.Slug)">
+											<i class="uil uil-comments-alt"></i> @(article.Comments != null ? article.Comments.Count() : "0")
+										</a>
+									</li>
+									<li><a href="#"><i class="uil uil-images"></i></a></li>
+								</ul>
+							</div>
+							<div class="entry-content">
+								<div>
+									@Html.Raw(article.Content.Length > 100 ? article.Content.Substring(0, 100) + "..." : article.Content)
+								</div>
+								<a asp-action="singlepost" asp-controller="home" asp-route-slug="@Html.Raw(article.Slug)" class="more-link">ادامه نوشته</a>
+							</div>
+						</div>
+					</div>
+				}
+			</div>
+		</div>
+	</div>
+}

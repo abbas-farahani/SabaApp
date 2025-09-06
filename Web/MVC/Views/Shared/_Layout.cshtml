@@ -1,0 +1,50 @@
+﻿@inject Microsoft.AspNetCore.Antiforgery.IAntiforgery _antiforgery
+@{
+	bool isRTL = CultureInfo.CurrentUICulture.TextInfo.IsRightToLeft;
+	string lang = CultureInfo.CurrentUICulture.TwoLetterISOLanguageName;
+}
+<!DOCTYPE html>
+<html dir="@(isRTL? "rtl" :"ltr")" direction="@(isRTL? "rtl" :"ltr")" lang="@lang">
+<head>
+	<partial name="partialviews/_headpv" />
+	<meta name="_token" content="@(_antiforgery.GetAndStoreTokens(Context).RequestToken)" />
+	@await RenderSectionAsync("Styles", required: false)
+</head>
+
+<body class="stretched">
+	<div id="wrapper">
+		@if (ViewBag.TopBar == null || (bool)ViewBag.TopBar){
+			@* <partial name="partialviews/_topbarpv" /> *@
+		}
+
+		@if (ViewBag.Header == null || (bool)ViewBag.Header)
+		{
+			<partial name="partialviews/_headerpv" />
+		}
+
+		@if (ViewBag.BreadCrumbs == null || (bool)ViewBag.BreadCrumbs)
+		{
+			<partial name="partialviews/_breadcrumbspv" />
+		}
+		@await RenderSectionAsync("Slider", required: false)
+		<section id="content">
+			@RenderBody()
+		</section>
+		<footer id="footer" class="dark">
+			@if (ViewBag.Footer == null || (bool)ViewBag.Footer)
+			{
+				<partial name="partialviews/_footerpv" />
+			}
+			@if (ViewBag.Copyright == null || (bool)ViewBag.Copyright)
+			{
+				<partial name="partialviews/_copyrightpv" />
+			}
+		</footer>
+	</div>
+	<partial name="partialviews/_bodyfooterpv" />
+	@await RenderSectionAsync("Scripts", required: false)
+	<partial name="partialviews/_ConfirmationMessagePV" />
+	<script src="~/js/site.js" asp-append-version="true"></script>
+
+</body>
+</html>

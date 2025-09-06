@@ -1,0 +1,91 @@
+﻿@model Core.Domain.Entities.Role
+@{
+	List<Permission> permissions = ViewBag.Permissions;
+}
+<div class="card">
+	<div class="card-header card-header-stretch sluggable">
+		<div class="card-title d-flex align-items-center">
+			<i class="ki-outline ki-calendar-8 fs-1 text-primary me-3 lh-0"></i>
+			<h3 class="fw-bold m-0 text-gray-800">@ViewData["title"]</h3>
+		</div>
+		<div class="card-toolbar m-0">
+		</div>
+	</div>
+	<form asp-action="create" class="create-role" method="post">
+		<div class="card-body">
+			@Html.AntiForgeryToken()
+			<div class="fv-row mb-8">
+				<label class="d-flex align-items-center fs-6 fw-semibold form-label mb-2">
+					<label asp-for="Name" class="required">@Html.DisplayNameFor(m => m.Name)</label>
+					<span class="ms-1" data-bs-toggle="tooltip" title="نام نقش را به انگلیسی وارد کنید">
+						<i class="ki-outline ki-information-5 text-gray-500 fs-6"></i>
+					</span>
+				</label>
+				<input asp-for="Name" class="form-control form-control-solid" />
+			</div>
+			<div class="fv-row mb-8">
+				<label class="required fs-6 fw-semibold mb-2" asp-for="Description">@Html.DisplayNameFor(m => m.Description)</label>
+				<textarea asp-for="Description" class="form-control form-control-solid" rows="3"></textarea>
+			</div>
+			@if (permissions != null && permissions.Count() > 0)
+			{
+				<div class="fv-row mb-8">
+					<div class="mb-5">
+						<label class="required fs-6 fw-semibold">دسترسی‌ها</label>
+						<div class="fs-7 fw-semibold text-muted">تعیین کنید این نقش به کدام بخش‌ها دسترسی داشته باشد</div>
+					</div>
+					<div class="d-flex flex-wrap">
+						@* <label class="form-check form-check-custom form-check-solid me-10">
+						<input class="form-check-input h-20px w-20px" type="checkbox" value="email" name="settings_notifications[]" />
+						<span class="form-check-label fw-semibold">دسترسی‌ها</span>
+					</label>
+					<label class="form-check form-check-custom form-check-solid">
+						<input class="form-check-input h-20px w-20px" type="checkbox" value="phone" checked="checked" name="settings_notifications[]" />
+						<span class="form-check-label fw-semibold">Phone</span>
+					</label> *@
+
+						@foreach (var permission in permissions)
+						{
+							<div class="col-6 col-md-3 col-lg-4 mb-2">
+								<div class="form-check form-switch form-check-custom form-check-success form-check-solid me-2">
+									<input type="checkbox" value="@permission.Name" data-id="@permission.Id" id="permission-add-@permission.Id" class="form-check-input w-35px h-20px" />
+									<label class="form-check-label fs-7" for="permission-add-@permission.Id">@permission.Name</label>
+								</div>
+							</div>
+						}
+					</div>
+				</div>
+			}
+			<input type="hidden" name="permissions" id="permissions" />
+		</div>
+		<div class="card-footer d-flex justify-content-end py-6 px-9">
+			<button type="submit" class="btn btn-primary">ذخیره تغییرات</button>
+		</div>
+	</form>
+</div>
+
+@section Scripts {
+	@{
+		await Html.RenderPartialAsync("_ValidationScriptsPartial");
+		<script type="text/javascript">
+			$(".create-role").submit(function (e) {
+				e.preventDefault();
+
+				var permissions = [];
+				$(".create-role input").each(
+					function (index) {
+						var input = $(this);
+
+						// Checkbox fields
+						if (input.attr('type') == 'checkbox' && input.prop('checked')) {
+							var permission = input.data('id');
+							permissions.push(permission);
+						}
+					}
+				);
+				$(".create-role #permissions").val(JSON.stringify(permissions));
+				$(".create-role").unbind('submit').submit();
+			});
+		</script>
+	}
+}

@@ -1,0 +1,588 @@
+﻿@model Core.Domain.Entities.Post
+<div class="content-wrap">
+	<div class="container">
+
+		<div class="row gx-5 col-mb-80">
+			<!-- Post Content
+			============================================= -->
+			<main class="postcontent col-12">
+
+				<div class="single-post mb-0">
+
+					<!-- Single Post
+					============================================= -->
+					<div class="entry">
+
+						<div class="entry-title">
+							<h2>@Html.Raw(Model.Title)</h2>
+						</div><!-- .entry-title end -->
+						<!-- Entry Meta
+						============================================= -->
+						<div class="entry-meta">
+							<ul>
+								<li title="@Model.CreationTime.ToString("HH:mm:ss")"><i class="uil uil-schedule"></i> @Model.CreationTime.ToString("dddd yyyy/MM/dd")</li>
+								<li><a href="#"><i class="uil uil-user"></i> @Html.Raw(Model.User.UserName)</a></li>
+								@if (Model.Categories != null)
+								{
+									<li>
+										<i class="uil uil-folder-open"></i>
+										@foreach (var category in Model.Categories)
+										{
+											<a asp-action="singlecategory" asp-controller="home" asp-route-slug="@Html.Raw(category.Slug)">@Html.Raw(category.Label)</a>
+										}
+									</li>
+								}
+								<li><a href="#comments"><i class="uil uil-comments-alt"></i> @(Model.Comments != null ? $"{Model.Comments.Count()} دیدگاه" : "بدون دیدگاه")</a></li>
+								<li><a href="#"><i class="uil uil-camera"></i></a></li>
+							</ul>
+						</div><!-- .entry-meta end -->
+						<!-- Entry Image
+						============================================= -->
+						<div class="entry-image">
+							@{
+								var thumb = @Model.PostMetas.FirstOrDefault(x => x.MetaName == "ThumbPath");
+							}
+							<a href="#"><img src="@(thumb!=null? thumb.MetaValue : "/media/svg/files/blank-image.svg")" alt="@Html.Raw(Model.Title)"></a>
+						</div><!-- .entry-image end -->
+						<!-- Entry Content
+						============================================= -->
+						<div class="entry-content mt-0">
+							@Html.Raw(Model.Content)
+							<!-- Post Single - Share
+							============================================= -->
+							<div id="cnvs-article-share" class="card border-default my-4">
+								<div class="card-body p-3">
+									<div class="d-flex align-items-center justify-content-between">
+										<h6 class="fs-6 fw-semibold mb-0">Share:</h6>
+										<div class="d-flex">
+											<a href="#" class="social-icon si-small text-white border-transparent rounded-circle bg-facebook" title="Facebook">
+												<i class="fa-brands fa-facebook-f"></i>
+												<i class="fa-brands fa-facebook-f"></i>
+											</a>
+
+											<a href="#" class="social-icon si-small text-white border-transparent rounded-circle bg-x-twitter" title="Twitter">
+												<i class="fa-brands fa-x-twitter"></i>
+												<i class="fa-brands fa-x-twitter"></i>
+											</a>
+
+											<a href="#" class="social-icon si-small text-white border-transparent rounded-circle bg-pinterest" title="Pinterest">
+												<i class="fa-brands fa-pinterest-p"></i>
+												<i class="fa-brands fa-pinterest-p"></i>
+											</a>
+
+											<a href="#" class="social-icon si-small text-white border-transparent rounded-circle bg-whatsapp" title="Whatsapp">
+												<i class="fa-brands fa-whatsapp"></i>
+												<i class="fa-brands fa-whatsapp"></i>
+											</a>
+
+											<a href="#" class="social-icon si-small text-white border-transparent rounded-circle bg-rss" title="RSS">
+												<i class="fa-solid fa-rss"></i>
+												<i class="fa-solid fa-rss"></i>
+											</a>
+
+											<a href="#" class="social-icon si-small text-white border-transparent rounded-circle bg-email3 me-0" title="Mail">
+												<i class="fa-solid fa-envelope"></i>
+												<i class="fa-solid fa-envelope"></i>
+											</a>
+										</div>
+									</div>
+								</div>
+							</div><!-- Post Single - Share End -->
+
+						</div>
+					</div><!-- .entry end -->
+					<!-- Post Navigation
+					============================================= -->
+					@* <div class="row text-center text-md-start justify-content-between my-5">
+						<div class="col-md-auto">
+							<a href="#" class="d-inline-flex align-items-center text-dark h-text-color"><i class="uil uil-angle-left-b fs-3 me-1"></i><span>15 Ways to create Healthy Habits</span></a>
+						</div>
+						<div class="col-md-auto">
+							<a href="#" class="d-inline-flex align-items-center text-dark h-text-color"><span>The Next big thing is AI</span><i class="uil uil-angle-right-b fs-3 ms-1"></i></a>
+						</div>
+					</div> *@<!-- .post-navigation end -->
+					<!-- Post Author Info
+					============================================= -->
+					@* <div class="card border-default mb-6">
+						<div class="card-body p-4">
+							<div class="row">
+								<div class="col-auto">
+									<img src="images/author/1.jpg" alt="Author Image" class="rounded-circle square square-md">
+								</div>
+								<div class="col">
+									<div class="d-flex align-items-start mb-2">
+										<div>
+											<h5 class="text-medium fw-semibold mb-0"><a href="#" class="text-dark">Jonathan Swift</a></h5>
+											<span class="text-muted text-smaller">12.5K Followers</span>
+										</div>
+										<a href="#" class="btn btn-light btn-sm rounded-pill px-3 ms-auto">Follow</a>
+									</div>
+									<p class="mb-3">Writer at Canvas Inc. Posting stories about Best Blog Designs.</p>
+									<a href="#" class="more-link">More Posts by Jonathan Swift</a>
+								</div>
+							</div>
+						</div>
+					</div><!-- Post Single - Author End --> *@
+
+					@* <h4 class="fs-4 fw-medium">Recommended for you</h4>
+
+					<div class="related-posts row posts-md g-4">
+						<div class="entry col-12 col-md-6">
+							<div class="grid-inner row gx-4">
+								<div class="col-auto">
+									<div class="entry-image">
+										<a href="#"><img src="images/blog/small/10.jpg" alt="Blog Single" class="square square-lg" style="object-fit: cover; object-position: center;"></a>
+									</div>
+								</div>
+								<div class="col">
+									<div class="entry-meta font-secondary fst-italic mt-0">
+										<ul>
+											<li><a href="#">Entertainment</a></li>
+										</ul>
+									</div>
+									<div class="entry-title title-sm text-transform-none">
+										<h3><a href="#">Best Ways to be more Creative</a></h3>
+									</div>
+									<div class="entry-meta font-secondary mt-2">
+										<ul>
+											<li>Posted 4 Days ago</li>
+											<li><a href="#"><i class="uil uil-comments-alt"></i> 12</a></li>
+										</ul>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div class="entry col-12 col-md-6">
+							<div class="grid-inner row gx-4">
+								<div class="col-auto">
+									<div class="entry-image">
+										<a href="#"><img src="images/blog/small/20.jpg" alt="Blog Single" class="square square-lg" style="object-fit: cover; object-position: center;"></a>
+									</div>
+								</div>
+								<div class="col">
+									<div class="entry-meta font-secondary fst-italic mt-0">
+										<ul>
+											<li><a href="#">Viral</a></li>
+										</ul>
+									</div>
+									<div class="entry-title title-sm text-transform-none">
+										<h3><a href="#">5 Interesting Viral Videos</a></h3>
+									</div>
+									<div class="entry-meta font-secondary mt-2">
+										<ul>
+											<li>Posted 2 weeks ago</li>
+											<li><a href="#"><i class="uil uil-comments-alt"></i> 422</a></li>
+										</ul>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div> *@
+
+					<!-- Comments
+					============================================= -->
+					<div id="comments">
+
+						<h3 id="comments-title">@(Model.Comments != null && Model.Comments.Count() > 0 ? Html.Raw($"<span>{Model.Comments.Count()}</span> دیدگاه") : "بدون دیدگاه")</h3>
+
+						<!-- Comments List
+						============================================= -->
+						@if (Model.Comments.Count() > 0)
+						{
+							<ol class="commentlist">
+								@foreach (var comment in Model.Comments)
+								{
+									<li class="comment byuser comment-author-_smcl_admin even thread-odd thread-alt depth-1" id="li-comment-@comment.Id">
+
+										<div id="comment-@comment.Id" class="comment-wrap">
+
+											<div class="comment-meta">
+
+												<div class="comment-author vcard">
+
+													<span class="comment-avatar">
+														<img alt='Image' src='https://1.gravatar.com/avatar/30110f1f3a4238c619bcceb10f4c4484?s=60&amp;d=http%3A%2F%2F1.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D60&amp;r=G' class='avatar avatar-60 photo' height='60' width='60'>
+													</span>
+
+												</div>
+
+											</div>
+
+											<div class="comment-content">
+
+												<div class="comment-author"><a href='@(Html.Raw(string.IsNullOrEmpty(comment.Website) ? "#": comment.Website))' rel='external nofollow' class='url'>@comment.UserName</a><span><a href="#" title="Permalink to this comment">@comment.CreationTime.ToString("dddd yyyy/MM/dd HH:mm")</a></span></div>
+
+												<p>@Html.Raw(comment.Content)</p>
+
+												<a class='comment-reply-link' href='#'><i class="bi-reply-fill"></i></a>
+
+											</div>
+
+											<div class="clear"></div>
+
+										</div>
+
+									</li>
+								}
+							</ol>
+							<!-- .commentlist end -->
+							<div class="clear"></div>
+						}
+
+						<!-- Comment Form
+						============================================= -->
+						<div id="respond">
+
+							@if (Model.CommentStatus == 0)
+							{
+								// Close Comment
+								Html.Raw("<p>امکان ثبت دیدگاه وجود ندارد.</p>");
+							}
+							else
+							{
+								// Private Comment
+								if (Model.CommentStatus == 2 && !User.Identity.IsAuthenticated)
+								{
+									Html.Raw("<p>برای ثبت دیدگاه وارد/عضو شوید.</p>");
+								}
+								else
+								{
+									<h3><span>دیدگاه</span> خود را ثبت کنید</h3>
+
+									<form class="row" asp-action="create" asp-controller="comment" asp-area="admin" method="post" id="commentform">
+										@if (User.Identity.IsAuthenticated)
+										{
+											<input type="hidden" name="userName" id="userName" value="@User.Identity.Name" class="form-control" />
+										}
+										<input type="hidden" name="postId" id="postId" value="@Model.Id" class="form-control" />
+										<input type="hidden" name="parentId" id="parentId" class="form-control" />
+										@if (Model.CommentStatus == 1 && !User.Identity.IsAuthenticated)
+										{
+											<div class="col-md-4 form-group">
+												<label for="name" class="required">نام<small>*</small></label>
+												<input type="text" name="name" id="name" value="" size="22" tabindex="1" class="form-control">
+											</div>
+
+											<div class="col-md-4 form-group">
+												<label for="email">پست الکترونیک</label>
+												<input type="email" name="email" id="email" value="" size="22" tabindex="2" class="form-control">
+											</div>
+
+											<div class="col-md-4 form-group">
+												<label for="website">وب سایت</label>
+												<input type="url" name="website" id="website" value="" size="22" tabindex="3" class="form-control">
+											</div>
+
+											<div class="w-100"></div>
+										}
+
+										<div class="col-12 form-group">
+											<label for="content">متن دیدگاه</label>
+											<textarea name="content" id="content" cols="58" rows="7" tabindex="4" class="form-control"></textarea>
+										</div>
+
+										<div class="col-12 form-group">
+											<button name="submit" type="submit" id="submit-button" tabindex="5" value="Submit" class="button button-3d m-0">ارسال پیام</button>
+										</div>
+									</form>
+								}
+							}
+
+						</div><!-- #respond end -->
+
+					</div><!-- #comments end -->
+
+				</div>
+
+			</main><!-- .postcontent end -->
+			<!-- Sidebar
+			============================================= -->
+			@* <aside class="sidebar col-lg-3">
+				<div class="sidebar-widgets-wrap">
+
+					<div class="widget widget-twitter-feed">
+
+						<h4>Twitter Feed</h4>
+						<ul class="iconlist twitter-feed" data-username="envato" data-count="2"></ul>
+
+						<div class="d-flex justify-content-end">
+							<a href="#" class="btn btn-secondary btn-sm">Follow Us on Twitter</a>
+						</div>
+
+					</div>
+
+					<div class="widget">
+
+						<h4>Flickr Photostream</h4>
+						<div id="flickr-widget" class="flickr-feed masonry-thumbs grid-container row row-cols-4 customjs" data-id="613394@N22" data-count="16" data-type="group" data-lightbox="gallery"></div>
+
+					</div>
+
+					<div class="widget">
+
+						<ul class="nav canvas-tabs tabs nav-tabs size-sm mb-3" id="canvas-tab" role="tablist">
+							<li class="nav-item" role="presentation">
+								<button class="nav-link active" id="canvas-tab-1" data-bs-toggle="pill" data-bs-target="#tab-1" type="button" role="tab" aria-controls="canvas-tab-1" aria-selected="true">Popular</button>
+							</li>
+							<li class="nav-item" role="presentation">
+								<button class="nav-link" id="canvas-tab-2" data-bs-toggle="pill" data-bs-target="#tab-2" type="button" role="tab" aria-controls="canvas-tab-2" aria-selected="false">Recents</button>
+							</li>
+							<li class="nav-item" role="presentation">
+								<button class="nav-link uil uil-comments-alt" id="canvas-tab-3" data-bs-toggle="pill" data-bs-target="#tab-3" type="button" role="tab" aria-controls="canvas-tab-3" aria-selected="false"></button>
+							</li>
+						</ul>
+
+						<div id="canvas-TabContent" class="tab-content">
+
+							<div class="tab-pane show active" id="tab-1" role="tabpanel" aria-labelledby="canvas-tab-1" tabindex="0">
+								<div class="posts-sm row col-mb-30" id="popular-post-list-sidebar">
+									<div class="entry col-12">
+										<div class="grid-inner row g-0">
+											<div class="col-auto">
+												<div class="entry-image">
+													<a href="#"><img class="rounded-circle" src="images/magazine/small/3.jpg" alt="Image"></a>
+												</div>
+											</div>
+											<div class="col ps-3">
+												<div class="entry-title">
+													<h4><a href="#">Lorem ipsum dolor sit amet, consectetur</a></h4>
+												</div>
+												<div class="entry-meta">
+													<ul>
+														<li><i class="uil uil-comments-alt"></i> 35 Comments</li>
+													</ul>
+												</div>
+											</div>
+										</div>
+									</div>
+
+									<div class="entry col-12">
+										<div class="grid-inner row g-0">
+											<div class="col-auto">
+												<div class="entry-image">
+													<a href="#"><img class="rounded-circle" src="images/magazine/small/2.jpg" alt="Image"></a>
+												</div>
+											</div>
+											<div class="col ps-3">
+												<div class="entry-title">
+													<h4><a href="#">Elit Assumenda vel amet dolorum quasi</a></h4>
+												</div>
+												<div class="entry-meta">
+													<ul>
+														<li><i class="uil uil-comments-alt"></i> 24 Comments</li>
+													</ul>
+												</div>
+											</div>
+										</div>
+									</div>
+
+									<div class="entry col-12">
+										<div class="grid-inner row g-0">
+											<div class="col-auto">
+												<div class="entry-image">
+													<a href="#"><img class="rounded-circle" src="images/magazine/small/1.jpg" alt="Image"></a>
+												</div>
+											</div>
+											<div class="col ps-3">
+												<div class="entry-title">
+													<h4><a href="#">Debitis nihil placeat, illum est nisi</a></h4>
+												</div>
+												<div class="entry-meta">
+													<ul>
+														<li><i class="uil uil-comments-alt"></i> 19 Comments</li>
+													</ul>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="tab-pane" id="tab-2" role="tabpanel" aria-labelledby="canvas-tab-2" tabindex="0">
+								<div class="posts-sm row col-mb-30" id="recent-post-list-sidebar">
+									<div class="entry col-12">
+										<div class="grid-inner row g-0">
+											<div class="col-auto">
+												<div class="entry-image">
+													<a href="#"><img class="rounded-circle" src="images/magazine/small/1.jpg" alt="Image"></a>
+												</div>
+											</div>
+											<div class="col ps-3">
+												<div class="entry-title">
+													<h4><a href="#">Lorem ipsum dolor sit amet, consectetur</a></h4>
+												</div>
+												<div class="entry-meta">
+													<ul>
+														<li>10th July 2021</li>
+													</ul>
+												</div>
+											</div>
+										</div>
+									</div>
+
+									<div class="entry col-12">
+										<div class="grid-inner row g-0">
+											<div class="col-auto">
+												<div class="entry-image">
+													<a href="#"><img class="rounded-circle" src="images/magazine/small/2.jpg" alt="Image"></a>
+												</div>
+											</div>
+											<div class="col ps-3">
+												<div class="entry-title">
+													<h4><a href="#">Elit Assumenda vel amet dolorum quasi</a></h4>
+												</div>
+												<div class="entry-meta">
+													<ul>
+														<li>10th July 2021</li>
+													</ul>
+												</div>
+											</div>
+										</div>
+									</div>
+
+									<div class="entry col-12">
+										<div class="grid-inner row g-0">
+											<div class="col-auto">
+												<div class="entry-image">
+													<a href="#"><img class="rounded-circle" src="images/magazine/small/3.jpg" alt="Image"></a>
+												</div>
+											</div>
+											<div class="col ps-3">
+												<div class="entry-title">
+													<h4><a href="#">Debitis nihil placeat, illum est nisi</a></h4>
+												</div>
+												<div class="entry-meta">
+													<ul>
+														<li>10th July 2021</li>
+													</ul>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="tab-pane" id="tab-3" role="tabpanel" aria-labelledby="canvas-tab-3" tabindex="0">
+								<div class="posts-sm row col-mb-30" id="recent-comments-list-sidebar">
+									<div class="entry col-12">
+										<div class="grid-inner row g-0">
+											<div class="col-auto">
+												<div class="entry-image">
+													<a href="#"><img class="rounded-circle" src="images/icons/avatar.jpg" alt="User Avatar"></a>
+												</div>
+											</div>
+											<div class="col ps-3">
+												<strong>John Doe:</strong> Veritatis recusandae sunt repellat distinctio...
+											</div>
+										</div>
+									</div>
+
+									<div class="entry col-12">
+										<div class="grid-inner row g-0">
+											<div class="col-auto">
+												<div class="entry-image">
+													<a href="#"><img class="rounded-circle" src="images/icons/avatar.jpg" alt="User Avatar"></a>
+												</div>
+											</div>
+											<div class="col ps-3">
+												<strong>Mary Jane:</strong> Possimus libero, earum officia architecto maiores....
+											</div>
+										</div>
+									</div>
+
+									<div class="entry col-12">
+										<div class="grid-inner row g-0">
+											<div class="col-auto">
+												<div class="entry-image">
+													<a href="#"><img class="rounded-circle" src="images/icons/avatar.jpg" alt="User Avatar"></a>
+												</div>
+											</div>
+											<div class="col ps-3">
+												<strong>Site Admin:</strong> Deleniti magni labore laboriosam odio...
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+
+						</div>
+
+					</div>
+
+					<div class="widget">
+
+						<h4>Portfolio Carousel</h4>
+						<div id="oc-portfolio-sidebar" class="owl-carousel carousel-widget" data-items="1" data-margin="10" data-loop="true" data-nav="false" data-autoplay="5000">
+
+							<div class="oc-item">
+								<div class="portfolio-item">
+									<div class="portfolio-image">
+										<a href="#">
+											<img src="images/portfolio/4/3.jpg" alt="Mac Sunglasses">
+										</a>
+										<div class="bg-overlay">
+											<div class="bg-overlay-content dark" data-hover-animate="fadeIn" data-hover-speed="350">
+												<a href="https://vimeo.com/89396394" class="overlay-trigger-icon bg-light text-dark" data-hover-animate="zoomIn" data-hover-speed="350" data-lightbox="iframe"><i class="uil uil-play"></i></a>
+											</div>
+											<div class="bg-overlay-bg dark" data-hover-animate="fadeIn" data-hover-speed="350"></div>
+										</div>
+									</div>
+									<div class="portfolio-desc text-center pb-0">
+										<h3><a href="portfolio-single-video.html">Mac Sunglasses</a></h3>
+										<span><a href="#">Graphics</a>, <a href="#">UI Elements</a></span>
+									</div>
+								</div>
+							</div>
+
+							<div class="oc-item">
+								<div class="portfolio-item">
+									<div class="portfolio-image">
+										<a href="portfolio-single.html">
+											<img src="images/portfolio/4/1.jpg" alt="Open Imagination">
+										</a>
+										<div class="bg-overlay">
+											<div class="bg-overlay-content dark" data-hover-animate="fadeIn" data-hover-speed="350">
+												<a href="images/blog/full/1.jpg" class="overlay-trigger-icon bg-light text-dark" data-hover-animate="zoomIn" data-hover-speed="350" data-lightbox="image"><i class="uil uil-plus"></i></a>
+											</div>
+											<div class="bg-overlay-bg dark" data-hover-animate="fadeIn" data-hover-speed="350"></div>
+										</div>
+									</div>
+									<div class="portfolio-desc text-center pb-0">
+										<h3><a href="portfolio-single.html">Open Imagination</a></h3>
+										<span><a href="#">Media</a>, <a href="#">Icons</a></span>
+									</div>
+								</div>
+							</div>
+
+						</div>
+
+
+					</div>
+
+					<div class="widget">
+
+						<h4>Tag Cloud</h4>
+						<div class="tagcloud">
+							<a href="#">general</a>
+							<a href="#">videos</a>
+							<a href="#">music</a>
+							<a href="#">media</a>
+							<a href="#">photography</a>
+							<a href="#">parallax</a>
+							<a href="#">ecommerce</a>
+							<a href="#">terms</a>
+							<a href="#">coupons</a>
+							<a href="#">modern</a>
+						</div>
+
+					</div>
+
+				</div>
+			</aside> *@<!-- .sidebar end -->
+		</div>
+
+	</div>
+</div>
+
+@section Scripts {
+	<script src="~/js/comments.js"></script>
+}

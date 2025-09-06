@@ -1,0 +1,163 @@
+﻿@model PageVM
+
+@section styles{
+	<link rel="stylesheet" href="~/plugins/admin/custom/ckeditor/style.css">
+	<link rel="stylesheet" href="~/plugins/admin/custom/ckeditor/ckeditor5/ckeditor5.css">
+}
+
+<form class="form d-flex flex-column flex-lg-row new-post sluggable" asp-action="create" asp-controller="page" asp-area="admin" method="post">
+	<div class="d-flex flex-column flex-row-fluid gap-7 gap-lg-10 me-lg-10 mb-7 mb-lg-0 mw-lg-900px">
+		<div class="d-flex flex-column gap-7 gap-lg-10">
+			<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+			<div class="card card-flush py-4">
+				<div class="card-body pt-0">
+					<div class="mb-2 fv-row">
+						<label asp-for="Title" class="required form-label"></label>
+						<span class="text-muted fs-7">@Html.GetPropertyDescription(m => m.Title)</span>
+						<input asp-for="Title" class="form-control mb-2 sluggable" placeholder="عنوان نوشته" data-type="tax" data-generator="on" />
+						<span asp-validation-for="Title" class="text-danger"></span>
+						<div class="fv-row slug-container d-none">
+							<div class="d-flex slug-preview">
+								<span class="me-2">نامک: </span>
+								<a href="#" class="fs-6 me-2 text-primary slug-anchor"></a>
+								<span class="cursor-pointer text-dark change-slug">ویرایش</span>
+							</div>
+							<div class="d-none custom-slug-form">
+								<div class="d-flex align-items-center">
+									<span>
+										<i class="ki-outline ki-fasten fs-2x text-primary me-4"></i>
+									</span>
+									<input asp-for="Slug" placeholder="نامک را وارد کنید" class="form-control slug-input mw-250px me-3" />
+									<button class="btn btn-icon btn-light-primary me-3 custom-slug-submit">
+										<span class="indicator-label">
+											<i class="ki-outline ki-check fs-1"></i>
+										</span>
+										<span class="indicator-progress">
+											<span class="spinner-border spinner-border-sm align-middle"></span>
+										</span>
+									</button>
+									<button class="btn btn-icon btn-light-danger custom-slug-cancel">
+										<span class="indicator-label">
+											<i class="ki-outline ki-cross fs-1"></i>
+										</span>
+										<span class="indicator-progress">
+											<span class="spinner-border spinner-border-sm align-middle"></span>
+										</span>
+									</button>
+								</div>
+							</div>
+						</div> <!-- End Slug -->
+					</div>
+
+					<div>
+						<div class="py-5" data-bs-theme="light">
+							<div class="editor-container editor-container_classic-editor editor-container_include-style editor-container_include-block-toolbar editor-container_include-fullscreen" id="editor-container">
+								<div class="editor-container__editor">
+									<div id="editor"></div>
+								</div>
+							</div>
+							<textarea asp-for="Content" class="page-classic-editor"></textarea>
+						</div>
+						<span asp-validation-for="Content" class="text-danger"></span>
+					</div>
+
+					<div class="editor-container editor-container_classic-editor editor-container_include-style editor-container_include-block-toolbar editor-container_include-fullscreen" id="editor-container">
+						<div class="editor-container__editor">
+							<div id="editor"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="d-flex flex-column gap-7 gap-lg-10 w-100 w-lg-300px">
+		<div class="card card-flush py-4 translation-card">
+			<div class="card-header">
+				<div class="card-title">
+					<h2>ترجمه</h2>
+				</div>
+			</div>
+			<div class="card-body py-0">
+				<div class="mb-2">
+					<select name="LanguagesList" id="LanguagesList" class="form-select mb-2" data-default="@ViewBag.DefaultLanguage" data-control="select2" data-hide-search="true" data-placeholder="زبان محصول را تعیین کنید" data-allow-clear="true">
+						@{
+							var langs = (List<Tuple<string, string, string, string, string, string>>)ViewBag.Languages;
+							var def = ViewBag.DefaultLanguage;
+						}
+						@foreach (var lang in langs)
+						{
+							if (def == lang.Item3)
+							{
+								<option value="@lang.Item3" data-kt-select2-country="@lang.Item6" selected="selected">@Html.Raw($"{lang.Item2}({lang.Item1})")</option>
+							}
+							else
+							{
+								<option value="@lang.Item3" data-kt-select2-country="@lang.Item6">@Html.Raw($"{lang.Item2}({lang.Item1})")</option>
+							}
+						}
+					</select>
+				</div>
+				<div class="mb-2">
+					<select name="OriginalPage" id="OriginalPage" class="form-select mb-2" asp-items="ViewBag.OriginalIds" data-control="select2" data-hide-search="true" data-placeholder="محصول اصلی را تعیین کنید" data-allow-clear="true"></select>
+				</div>
+			</div>
+			<div class="card-footer"></div>
+		</div> <!-- Translation Management -->
+
+		<div class="card card-flush py-4">
+			<div class="card-header">
+				<div class="card-title">
+					<h2>وضعیت انتشار</h2>
+				</div>
+				<div class="card-toolbar">
+					<div class="rounded-circle bg-success w-15px h-15px" id="new-page-status-bullet"></div>
+				</div>
+			</div>
+			<div class="card-body py-0">
+				<div class="mb-2">
+					<select asp-for="Status" class="form-select mb-2" data-control="select2" data-hide-search="true">
+						<option value="published" selected="selected">منتشرشده</option>
+						<option value="draft">پیش‌نویس</option>
+						<option value="scheduled">زمان‌بندی</option>
+						<option value="private">خصوصی</option>
+					</select>
+
+					<span asp-validation-for="Status" class="text-danger"></span>
+					<div class="text-muted fs-7">وضعیت انتشار نوشته خود را مشخص کنید.</div>
+					<div class="d-none my-10">
+						<label for="new-page-datepicker" class="form-label">تاریخ انتشار را انتخاب کنید</label>
+						<input class="form-control" id="new-page-datepicker" placeholder="یک تاریخ انتخاب کنید" />
+					</div>
+				</div>
+			</div>
+			<div class="card-footer pt-2 text-end pt-0">
+				<a href="@Url.Action("index")" class="btn btn-danger page-cancel">حذف</a>
+				<button type="submit" id="kt_ecommerce_add_product_submit" class="btn btn-primary">
+					<span class="indicator-label">ذخیره تغییرات</span>
+					<span class="indicator-progress">
+						لطفا صبرکنید...
+						<span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+					</span>
+				</button>
+			</div>
+		</div> <!-- Publishment Status -->
+	</div>
+</form>
+
+@section Scripts {
+	@* <script type="importmap">
+		{
+			"imports": {
+				"ckeditor5": "/plugins/admin/custom/ckeditor/ckeditor5/ckeditor5.js",
+				"ckeditor5/": "/plugins/admin/custom/ckeditor/ckeditor5/"
+			}
+		}
+	</script>
+	<script type="module" src="~/plugins/admin/custom/ckeditor/main.js"></script> *@
+	<script src="~/plugins/admin/custom/ckeditor/ckeditor-classic.bundle.js"></script>
+	<script src="~/js/admin/editor.js"></script>
+	<script src="~/js/admin/custom/pages/scripts.js"></script>
+	@{
+		await Html.RenderPartialAsync("_ValidationScriptsPartial");
+	}
+}

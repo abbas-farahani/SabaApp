@@ -1,0 +1,32 @@
+﻿@model string
+<div class="fv-row slug-container d-none">
+    <div class="d-flex slug-preview">
+        <span class="me-2">نامک: </span>
+        <a href="#" class="fs-6 me-2 text-primary slug-anchor"></a>
+        <span class="cursor-pointer text-dark change-slug">ویرایش</span>
+    </div>
+    <div class="d-none custom-slug-form">
+        <div class="d-flex align-items-center">
+            <span>
+                <i class="ki-outline ki-fasten fs-2x text-primary me-4"></i>
+            </span>
+            <input type="text" id="Slug" name="Slug" value="@Model" data-value="@Model" placeholder="نامک را وارد کنید" class="form-control mw-250px me-3" />
+            <button class="btn btn-icon btn-light-primary me-3 custom-slug-submit">
+                <span class="indicator-label">
+                    <i class="ki-outline ki-check fs-1"></i>
+                </span>
+                <span class="indicator-progress">
+                    <span class="spinner-border spinner-border-sm align-middle"></span>
+                </span>
+            </button>
+            <button class="btn btn-icon btn-light-danger custom-slug-cancel">
+                <span class="indicator-label">
+                    <i class="ki-outline ki-cross fs-1"></i>
+                </span>
+                <span class="indicator-progress">
+                    <span class="spinner-border spinner-border-sm align-middle"></span>
+                </span>
+            </button>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,44 @@
+﻿@{
+    Layout = "_LayoutLogin";
+    ViewData["Title"] = "تایید ایمیل";
+}
+
+<div class="d-flex flex-center flex-column align-items-stretch h-lg-100 w-md-400px">
+	<div class="d-flex flex-center flex-column flex-column-fluid pb-15 pb-lg-20">
+		<form class="form w-100" method="post" asp-action="confirmemail" asp-controller="dashboard" asp-area="dashboard">
+			<div class="text-center mb-10">
+				<h1 class="text-gray-900 fw-bolder mb-3">Forgot Password ?</h1>
+				<div class="text-gray-500 fw-semibold fs-6">Enter your email to reset your password.</div>
+			</div>
+			<div class="fv-row mb-8">
+				<input type="text" placeholder="Email" name="email" autocomplete="off" class="form-control bg-transparent" />
+			</div>
+			<div class="d-flex flex-wrap justify-content-center pb-lg-0">
+				<button type="button" id="kt_password_reset_submit" class="btn btn-primary me-4">
+					<span class="indicator-label">Submit</span>
+					<span class="indicator-progress">Please wait... 
+					<span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
+				</button>
+				<a href="authentication/layouts/overlay/sign-in.html" class="btn btn-light">Cancel</a>
+			</div>
+		</form>
+		<div class="text-center">
+			@if (ViewBag.IsConfirmed)
+			{
+				<div class="alert alert-success">
+					حساب کاربری شما تایید شد لطفا با کلیک بر روی لینک زیر وارد سایت شوید
+				</div>
+				<p>
+					<a asp-action="Login" asp-controller="Account">Login To Website</a>
+				</p>
+			}
+			else
+			{
+				<div class="alert alert-danger">
+					حساب کاربری شما تایید نشد
+				</div>
+			}
+		</div>
+	</div>
+	<partial name="partialviews/_loginfooterpv" />
+</div>

@@ -1,0 +1,326 @@
+﻿@model MVC.Areas.Admin.Models.ViewModels.Post.PostVM
+
+@section Styles {
+    <style>
+        .image-input-placeholder {
+            background-image: url('/media/svg/files/blank-image.svg');
+        }
+        [data-bs-theme="dark"] .image-input-placeholder {
+            background-image: url('/media/svg/files/blank-image-dark.svg');
+        }
+    </style>
+}
+
+<form class="form d-flex flex-column flex-lg-row new-post sluggable" asp-action="edit" method="post">
+    <div class="d-flex flex-column flex-row-fluid gap-7 gap-lg-10 me-lg-10 mb-7 mb-lg-0">
+        <ul class="nav nav-custom nav-tabs nav-line-tabs nav-line-tabs-2x border-0 fs-4 fw-semibold mb-n2">
+            <li class="nav-item">
+                <a class="nav-link text-active-primary pb-4 active" data-bs-toggle="tab" href="#edit_post_general">عمومی</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-active-primary pb-4" data-bs-toggle="tab" href="#edit_post_reviews">نظرات</a>
+            </li>
+        </ul>
+        <div class="tab-content">
+            <div class="tab-pane fade show active" id="edit_post_general" role="tab-panel">
+                <div class="d-flex flex-column gap-7 gap-lg-10">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="card card-flush py-4">
+                        <div class="card-body pt-0">
+                            <div class="mb-10 fv-row">
+                                <label asp-for="Title" class="required form-label"></label>
+                                <span class="text-muted fs-7">@Html.GetPropertyDescription(m => m.Title)</span>
+                                <input type="text" asp-for="Title" class="form-control mb-2 sluggable" placeholder="عنوان نوشته" data-type="tax" data-generator="on" />
+                                <span asp-validation-for="Title" class="text-danger"></span>
+                                <partial name="~/areas/admin/views/shared/PartialViews/_SlugFormPV.cshtml" model="Model.Slug" />
+                            </div>
+
+                            <div>
+                                <div class="py-5" data-bs-theme="light">
+                                    <textarea asp-for="Content" class="post-classic-editor"></textarea>
+                                </div>
+                                <span asp-validation-for="Content" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                    @* <div class="card card-flush py-4">
+                        <div class="card-header">
+                            <div class="card-title">
+                                <h2>رسانه</h2>
+                            </div>
+                        </div>
+                        <div class="card-body pt-0">
+                            <div class="fv-row mb-2">
+                                <partial name="~/areas/admin/views/media/PartialViews/_UploaderPV.cshtml" />
+                            </div>
+                            <div class="text-muted fs-7">Set the product media gallery.</div>
+                        </div>
+                    </div> *@
+                </div>
+            </div>
+            <div class="tab-pane fade" id="edit_post_reviews" role="tab-panel">
+                <div class="d-flex flex-column gap-7 gap-lg-10">
+                    <div class="card card-flush py-4">
+                        <div class="card-header">
+                            <div class="card-title">
+                                <h2>دیدگاه کاربران</h2>
+                            </div>
+                            <div class="card-toolbar">
+                                <span class="fw-bold me-5">Overall Rating:</span>
+                                <div class="rating">
+                                    <div class="rating-label checked">
+                                        <i class="ki-outline ki-star fs-2"></i>
+                                    </div>
+                                    <div class="rating-label checked">
+                                        <i class="ki-outline ki-star fs-2"></i>
+                                    </div>
+                                    <div class="rating-label checked">
+                                        <i class="ki-outline ki-star fs-2"></i>
+                                    </div>
+                                    <div class="rating-label checked">
+                                        <i class="ki-outline ki-star fs-2"></i>
+                                    </div>
+                                    <div class="rating-label">
+                                        <i class="ki-outline ki-star fs-2"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body pt-0">
+                            @if (Model.Comments != null && Model.Comments.Count() > 0)
+                            {
+                                <table class="table table-row-dashed fs-6 gy-5 my-0" id="edit_product_reviews">
+                                    <thead>
+                                        <tr class="text-start text-gray-500 fw-bold fs-7 text-uppercase gs-0">
+                                            <th class="w-10px pe-2">
+                                                <div class="form-check form-check-sm form-check-custom form-check-solid me-3">
+                                                    <input class="form-check-input" type="checkbox" data-kt-check="true" data-kt-check-target="#edit_product_reviews .form-check-input" value="1" />
+                                                </div>
+                                            </th>
+                                            <th class="min-w-125px">امتیاز به نوشته</th>
+                                            <th class="min-w-175px">نام کاربر</th>
+                                            <th class="min-w-175px">متن دیدگاه</th>
+                                            <th class="min-w-100px text-end fs-7">تاریخ</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var comment in Model.Comments)
+                                        {
+                                            <tr>
+                                                <td>
+                                                    <div class="form-check form-check-sm form-check-custom form-check-solid mt-1">
+                                                        <input class="form-check-input" type="checkbox" value="@comment.Id" />
+                                                    </div>
+                                                </td>
+                                                <td data-order="rating-5">
+                                                    <div class="rating">
+                                                        <div class="rating-label checked">
+                                                            <i class="ki-outline ki-star fs-6"></i>
+                                                        </div>
+                                                        <div class="rating-label checked">
+                                                            <i class="ki-outline ki-star fs-6"></i>
+                                                        </div>
+                                                        <div class="rating-label checked">
+                                                            <i class="ki-outline ki-star fs-6"></i>
+                                                        </div>
+                                                        <div class="rating-label checked">
+                                                            <i class="ki-outline ki-star fs-6"></i>
+                                                        </div>
+                                                        <div class="rating-label checked">
+                                                            <i class="ki-outline ki-star fs-6"></i>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <a asp-action="edit" asp-controller="comment" asp-route-id="@comment.Id" class="d-flex text-gray-900 text-gray-800 text-hover-primary">
+                                                        <div class="symbol symbol-circle symbol-25px me-3">
+                                                            <div class="symbol-label bg-light-danger">
+                                                                <span class="text-danger">M</span>
+                                                            </div>
+                                                        </div>
+                                                        <span class="fw-bold">@Html.Raw(comment.UserName)</span>
+                                                    </a>
+                                                </td>
+                                                <td class="text-gray-600 fw-bold">@Html.Raw(comment.Content)</td>
+                                                <td class="text-end">
+                                                    <span class="fw-semibold text-muted">@comment.CreationTime.ToString("dddd yyyy/MM/dd HH:mm:ss")</span>
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="d-flex flex-column gap-7 gap-lg-10 w-100 w-lg-300px">
+        <div class="card card-flush py-4 translation-card">
+            <div class="card-header">
+                <div class="card-title">
+                    <h2>ترجمه</h2>
+                </div>
+            </div>
+            <div class="card-body py-0">
+                <div class="mb-2">
+                    <select name="LanguagesList" id="LanguagesList" class="form-select mb-2" data-default="@ViewBag.DefaultLanguage" data-control="select2" data-hide-search="true" data-placeholder="زبان محصول را تعیین کنید" data-allow-clear="true">
+                        @{
+                            var langs = (List<Tuple<string, string, string, string, string, string>>)ViewBag.Languages;
+                            var def = ViewBag.DefaultLanguage;
+                        }
+                        @foreach (var lang in langs)
+                        {
+                            if (def == lang.Item3)
+                            {
+                                <option value="@lang.Item3" data-kt-select2-country="@lang.Item6" selected="selected">@Html.Raw($"{lang.Item2}({lang.Item1})")</option>
+                            }
+                            else
+                            {
+                                <option value="@lang.Item3" data-kt-select2-country="@lang.Item6">@Html.Raw($"{lang.Item2}({lang.Item1})")</option>
+                            }
+                        }
+                    </select>
+                </div>
+                <div class="mb-2">
+                    <select name="OriginalArticle" id="OriginalArticle" class="form-select mb-2" asp-items="ViewBag.OriginalIds" data-control="select2" data-hide-search="true" data-placeholder="محصول اصلی را تعیین کنید" data-allow-clear="true"></select>
+                </div>
+            </div>
+            <div class="card-footer"></div>
+        </div> <!-- Translation Management -->
+
+        <div class="card card-flush py-4">
+            <div class="card-header">
+                <div class="card-title">
+                    <h2>وضعیت انتشار</h2>
+                </div>
+                <div class="card-toolbar">
+                    <div class="rounded-circle bg-success w-15px h-15px" id="new-post-status-bullet"></div>
+                </div>
+            </div>
+            <div class="card-body pt-0">
+                <div>
+                    <select asp-for="Status" class="form-select mb-2" data-control="select2" data-hide-search="true">
+                        <option></option>
+                        <option value="published">منتشرشده</option>
+                        <option value="draft">پیش‌نویس</option>
+                        <option value="scheduled">زمان‌بندی</option>
+                        <option value="private">خصوصی</option>
+                    </select>
+
+                    <span asp-validation-for="Status" class="text-danger"></span>
+                    <div class="text-muted fs-7">وضعیت انتشار نوشته خود را مشخص کنید.</div>
+                    <div class="d-none my-10">
+                        <label for="new-post-datepicker" class="form-label">تاریخ انتشار را انتخاب کنید</label>
+                        <input class="form-control" id="new-post-datepicker" placeholder="یک تاریخ انتخاب کنید" />
+                    </div>
+                    @if (Model.CreationTime.Year>1920)
+                    {
+                        <div class="mt-5">
+                            <label asp-for="CreationTime"></label>
+                            <span class="fs-7 fw-bold">@Model.CreationTime.ToString("dddd yyyy/MM/dd HH:mm:ss")</span>
+                        </div>
+                    }
+                    @if (Model.LastModified != null && Model.LastModified.Value.Year > 1920)
+                    {
+                        <div class="mt-5">
+                            <label asp-for="LastModified"></label>
+                            <span class="fs-7 fw-bold">@Model.LastModified.Value.ToString("dddd yyyy/MM/dd HH:mm:ss")</span>
+                        </div>
+                    }
+                </div>
+                <div>
+                    <label asp-for="CommentStatus"></label>
+                    <select asp-for="CommentStatus" class="form-select mb-2" id="new-post-comment-status" data-control="select2" data-hide-search="true" data-placeholder="Select an option">
+                        <option></option>
+                        <option value="open" selected="selected">آزاد</option>
+                        <option value="close">بسته</option>
+                        <option value="private">کاربران عضو</option>
+                    </select>
+                    <span asp-validation-for="Status" class="text-danger"></span>
+                    <div class="text-muted fs-7">وضعیت امکان ارسال دیدگاه را مشخص کنید.</div>
+                </div>
+            </div>
+            <div class="card-footer d-flex justify-content-end">
+                <a href="@Url.Action("index")" class="btn btn-danger me-5 product_cancel">حذف</a>
+                <button type="submit" id="kt_ecommerce_add_product_submit" class="btn btn-primary">
+                    <span class="indicator-label">ذخیره تغییرات</span>
+                    <span class="indicator-progress">
+                        لطفا صبرکنید...
+                        <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                    </span>
+                </button>
+            </div>
+        </div> <!-- Publishment Status -->
+
+        <div class="card card-flush py-4">
+            <div class="card-header">
+                <div class="card-title">
+                    <h2>تصویر نوشته</h2>
+                </div>
+            </div>
+            <div class="card-body text-center pt-0">
+                <div id="post-thumbnail" class="image-input image-input-empty image-input-outline image-input-placeholder mb-3" data-kt-image-input="true">
+                    <div class="image-input-wrapper w-150px h-150px" style="@(String.IsNullOrEmpty(Model.ThumbPath) ? "" : $"background-image: url('{Model.ThumbPath}') !important;")"></div>
+                    <label class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow" data-kt-image-input-action="change" data-bs-toggle="tooltip" title="تغییر تصویر">
+                        <i class="ki-outline ki-pencil fs-7"></i>
+                        <input type="file" name="avatar" accept=".png, .jpg, .jpeg" />
+                        <input type="hidden" name="avatar_remove" />
+                        <input asp-for="ThumbPath" type="hidden" />
+                        <input asp-for="ThumbName" type="hidden" />
+                    </label>
+                    <span class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow" data-kt-image-input-action="cancel" data-bs-toggle="tooltip" title="انصراف">
+                        <i class="ki-outline ki-cross fs-2"></i>
+                    </span>
+                    <span class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow" data-kt-image-input-action="remove" data-bs-toggle="tooltip" title="حذف تصویر">
+                        <i class="ki-outline ki-cross fs-2"></i>
+                    </span>
+                </div>
+                <div class="text-muted fs-7">Set the product thumbnail image. Only *.png, *.jpg and *.jpeg image files are accepted</div>
+            </div>
+        </div> <!-- Featured image -->
+
+        <div class="card card-flush py-4">
+            <div class="card-header">
+                <div class="card-title">
+                    <h2>دسته بندی</h2>
+                </div>
+            </div>
+            <div class="card-body pt-0">
+                <label class="form-label">موضوعات</label>
+                <select asp-for="CategoriesId" class="form-select mb-2" asp-items="ViewBag.CategoriesId" data-control="select2" data-placeholder="Select an option" data-allow-clear="true" multiple="multiple"></select>
+
+                <div class="text-muted fs-7 mb-7">نوشته خود را در یک موضوع ثبت کنید</div>
+                <a asp-controller="category" asp-action="create" asp-area="admin" class="btn btn-light-primary btn-sm mb-10">
+                    <i class="ki-outline ki-plus fs-2"></i>دسته بندی جدید
+                </a>
+                <label class="form-label d-block">برچسب‌ها</label>
+                <input id="kt_ecommerce_add_product_tags" name="kt_ecommerce_add_product_tags" class="form-control mb-2" value="" />
+                <div class="text-muted fs-7">برچسبی برای نوشته خود انتخاب کنید</div>
+            </div>
+        </div> <!-- Categories and Tags -->
+    </div>
+</form>
+
+
+@section Scripts {
+    <script src="~/plugins/admin/custom/ckeditor/ckeditor-classic.bundle.js"></script>
+    <script src="~/js/admin/editor.js"></script>
+    @* <script src="~/plugins/admin/custom/formrepeater/formrepeater.bundle.js"></script> *@
+    @* <script src="~/js/admin/custom/apps/ecommerce/catalog/save-product.js"></script> *@
+    <script src="~/js/admin/general.js"></script>
+    <script src="~/js/admin/custom/filemanager/scripts.js"></script>
+    <script src="~/js/admin/custom/posts/scripts.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function(){
+            var target = document.querySelector('.slug-preview');
+            var blockUI = (KTBlockUI.getInstance(target) != null) ? KTBlockUI.getInstance(target) : new KTBlockUI(target);
+            $('.slug-anchor').text($('input[name=Slug]').val());
+            $('.slug-container').removeClass('d-none');
+        });
+    </script>
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

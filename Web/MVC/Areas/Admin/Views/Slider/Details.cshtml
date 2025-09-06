@@ -1,0 +1,98 @@
+﻿@model SliderVM
+
+<div class="card card-flush h-lg-100">
+	<div class="card-header pt-7">
+		<h3 class="card-title align-items-start flex-column">
+			<span class="card-label fw-bold text-gray-800">اسلایدر @Html.Raw(Model.Title)</span>
+			<span class="text-gray-500 mt-1 fw-semibold fs-6">مدیریت اسلایدها</span>
+		</h3>
+		<div class="card-toolbar">
+		</div>
+	</div>
+	<div class="card-body pt-6">
+		<div class="table-responsive">
+			<table class="table table-row-dashed align-middle gs-0 gy-3 my-0">
+				<thead>
+					<tr class="fs-7 fw-bold text-gray-500 border-bottom-0">
+						<th class="p-0 pb-3 min-w-175px text-start">عنوان اسلاید</th>
+						<th class="p-0 pb-3 min-w-100px text-end">نوع اسلاید</th>
+						<th class="p-0 pb-3 min-w-100px text-end">تاریخ ثبت</th>
+						<th class="p-0 pb-3 w-50px text-end">عملیات</th>
+					</tr>
+				</thead>
+				<tbody>
+					@foreach (var slide in Model.Slides)
+					{
+						<tr>
+							<td>
+								<div class="d-flex align-items-center">
+									<div class="symbol symbol-50px me-3">
+										@if (slide.BackgroundType == "image")
+										{
+											<i class="ki-duotone ki-picture fs-2x text-primary">
+												<span class="path1"></span>
+												<span class="path2"></span>
+											</i>
+										}
+										else if (slide.BackgroundType == "video")
+										{
+											<i class="ki-duotone ki-screen fs-2x text-success">
+												<span class="path1"></span>
+												<span class="path2"></span>
+												<span class="path3"></span>
+												<span class="path4"></span>
+											</i>
+										}
+										else if (slide.BackgroundType == "color")
+										{
+											<i class="ki-duotone ki-bucket-square fs-2x text-danger">
+												<span class="path1"></span>
+												<span class="path2"></span>
+												<span class="path3"></span>
+											</i>
+										}
+									</div>
+									<div class="d-flex justify-content-start flex-column">
+										<a asp-action="edit" asp-route-id="@slide.Id.Value" class="text-gray-800 fw-bold text-hover-primary mb-1 fs-6">@Html.Raw(slide.Title)</a>
+										<span class="text-gray-500 fw-semibold d-block fs-7">@Html.Raw($"{slide.Description.Substring(0, 15)}...")</span>
+									</div>
+								</div>
+							</td>
+							<td class="text-end pe-0">
+								@if (slide.BackgroundType == "image")
+								{
+									<span class="text-gray-600 fw-bold fs-6">تصویر</span>
+								}
+								else if (slide.BackgroundType == "video")
+								{
+									<span class="text-gray-600 fw-bold fs-6">ویدئو</span>
+								}
+								else if (slide.BackgroundType == "color")
+								{
+									<span class="text-gray-600 fw-bold fs-6">رنگ</span>
+								}
+							</td>
+							<td class="text-end pe-0">
+								<span class="text-gray-800 fw-bold fs-6">@slide.CreationTime.ToString("yyyy/MM/dd HH:mm")</span>
+								@if (slide.LastModified != null)
+								{
+									<span class="text-danger min-w-50px d-block text-end fw-bold fs-6">آخرین تغییر: @slide.LastModified.Value.ToString("yyyy/MM/dd HH:mm")</span>
+								}
+							</td>
+							<td class="text-end pe-12">
+								<div class="d-flex justify-content-end">
+									<a asp-action="edit" asp-route-id="@slide.Id" asp-route-sliderId="@slide.SliderId" class="btn btn-icon btn-bg-light btn-active-color-warning btn-sm me-1">
+										<i class="ki-outline ki-pencil fs-2"></i>
+									</a>
+									<a href="#" data-id="@slide.Id" data-action="slider" class="btn btn-icon btn-bg-light btn-active-color-danger btn-sm me-1 delete-request">
+										<i class="ki-outline ki-trash fs-2"></i>
+									</a>
+								</div>
+							</td>
+						</tr>
+					}
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>

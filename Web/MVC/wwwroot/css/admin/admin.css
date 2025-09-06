@@ -1,0 +1,103 @@
+@font-face {
+    font-family: vazir;
+    src: url('../../plugins/global/fonts/vazir/Vazirmatn-FD-Thin.woff2') format('woff2');
+    font-weight: 100;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: vazir;
+    src: url('../../plugins/global/fonts/vazir/Vazirmatn-FD-ExtraLight.woff2') format('woff2');
+    font-weight: 200;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: vazir;
+    src: url('../../plugins/global/fonts/vazir/Vazirmatn-FD-Light.woff2') format('woff2');
+    font-weight: 300;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: vazir;
+    src: url('../../plugins/global/fonts/vazir/Vazirmatn-FD-Regular.woff2') format('woff2');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: vazir;
+    src: url('../../plugins/global/fonts/vazir/Vazirmatn-FD-Medium.woff2') format('woff2');
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: vazir;
+    src: url('../../plugins/global/fonts/vazir/Vazirmatn-FD-SemiBold.woff2') format('woff2');
+    font-weight: 600;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: vazir;
+    src: url('../../plugins/global/fonts/vazir/Vazirmatn-FD-Bold.woff2') format('woff2');
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: vazir;
+    src: url('../../plugins/global/fonts/vazir/Vazirmatn-FD-ExtraBold.woff2') format('woff2');
+    font-weight: 800;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: vazir;
+    src: url('../../plugins/global/fonts/vazir/Vazirmatn-FD-Black.woff2') format('woff2');
+    font-weight: 900;
+    font-style: normal;
+    font-display: swap;
+}
+
+
+html {
+    font-family: vazir;
+    font-size: 14px;
+}
+
+*, body, b, p, a, span, input, button, strong, legend, label, fieldset, textarea, text, select, option, div, pre {
+    font-family: vazir;
+}
+
+.ki-duotone, .ki-duotone span:before {
+    font-family: keenicons-duotone !important;
+}
+
+@media (min-width: 768px) {
+    html {
+        font-size: 16px;
+    }
+}
+.select2-container--bootstrap5 .select2-dropdown .select2-results__option.select2-results__option--selected:after {
+    right: auto !important;
+    left: 1.25rem;
+}
+html[direction="rtl"] button.select2-selection__clear {
+    right: auto !important;
+    left: 3rem !important;
+}
+
+html[direction="rtl"] .select2-container--bootstrap5 .select2-selection--multiple .select2-selection__rendered .select2-selection__choice .select2-selection__choice__remove {
+    left: .5rem !important;
+}

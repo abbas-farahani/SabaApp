@@ -1,0 +1,16 @@
+﻿@using MVC
+@using MVC.Models.ViewModels
+@using MVC.Areas.Admin.Models
+@using MVC.Areas.Admin.Models.ViewModels
+@using MVC.Areas.Admin.Models.ViewModels.Post
+@using MVC.Areas.Admin.Models.ViewModels.Options
+@using Core.Domain.Contracts.Services
+@using Core.Domain.Entities
+@using Microsoft.AspNetCore.Identity
+@using Utilities.HtmlHelpers
+@using System.Security.Claims
+@inject IOptionService _optionService
+@inject IToolsService _toolsService
+
+
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers

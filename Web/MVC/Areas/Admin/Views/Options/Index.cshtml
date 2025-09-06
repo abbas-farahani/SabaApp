@@ -1,0 +1,267 @@
+﻿@model GeneralVM
+@{
+	string languagesJson = Newtonsoft.Json.JsonConvert.SerializeObject(Model.Languages);
+}
+@section Styles {
+	<style>
+		.image-input-placeholder {
+		@{
+			if(string.IsNullOrEmpty(Model.SiteLogoPath)){
+				Html.Raw("background-image: url('/media/svg/files/blank-image.svg');");
+			}else{
+				Html.Raw($"style=\"background-image: url('{Model.SiteLogoPath}')\"");
+			}
+		}
+		}
+
+		[data-bs-theme="dark"] .image-input-placeholder {
+		@{
+			if (string.IsNullOrEmpty(Model.SiteLogoPath))
+			{
+				Html.Raw("background-image: url('/media/svg/files/blank-image-dark.svg');");
+			}
+			else
+			{
+				Html.Raw($"style=\"background-image: url('{Model.SiteLogoPath}')\"");
+			}
+		} 
+		}
+	</style>
+}
+
+<div class="card">
+	<div class="card-header card-header-stretch">
+		<div class="card-title d-flex align-items-center">
+			<i class="ki-outline ki-calendar-8 fs-1 text-primary me-3 lh-0"></i>
+			<h3 class="fw-bold m-0 text-gray-800">مدیریت تنظیمات عمومی وب سایت</h3>
+		</div>
+		<div class="card-toolbar m-0">
+		</div>
+	</div>
+	<form class="form" method="post" asp-action="index" asp-controller="options" asp-area="admin" enctype="multipart/form-data">
+		<div class="card-body p-9">
+			<div class="row mb-5">
+				<div class="col-xl-3">
+					<label asp-for="SiteLogoPath" class="fs-6 fw-semibold mt-2 mb-3"></label>
+				</div>
+				<div class="col-lg-8">
+					<div class="image-input image-input-outline" data-kt-image-input="true" style="background-image: url('/media/svg/avatars/blank.svg')">
+						<div class="image-input-wrapper w-125px h-125px bgi-position-center"></div>
+						<label class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-white shadow" data-kt-image-input-action="change" data-bs-toggle="tooltip" title="@Html.DisplayNameFor(m => m.SiteLogoPath)">
+							<i class="ki-outline ki-pencil fs-7"></i>
+							<input asp-for="SiteLogo" accept=".png, .jpg, .jpeg, .svg" />
+							<input type="hidden" name="avatar_remove" />
+						</label>
+						<span class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-white shadow" data-kt-image-input-action="cancel" data-bs-toggle="tooltip" title="انصراف">
+							<i class="ki-outline ki-cross fs-2"></i>
+						</span>
+						<span class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-white shadow" data-kt-image-input-action="remove" data-bs-toggle="tooltip" title="حذف آواتار">
+							<i class="ki-outline ki-cross fs-2"></i>
+						</span>
+					</div>
+					<div class="form-text">فایل‌های مجاز: png, jpg, jpeg.</div>
+				</div>
+			</div>
+			<div class="row mb-5">
+				<div class="col-xl-3">
+					<label asp-for="SiteFavIconPath" class="fs-6 fw-semibold mt-2 mb-3"></label>
+				</div>
+				<div class="col-lg-8">
+					<div class="image-input image-input-outline" data-kt-image-input="true" style="background-image: url('/media/svg/avatars/blank.svg')">
+						<div class="image-input-wrapper w-125px h-125px bgi-position-center"></div>
+						<label class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-white shadow" data-kt-image-input-action="change" data-bs-toggle="tooltip" title="@Html.DisplayNameFor(m => m.SiteFavIconPath)">
+							<i class="ki-outline ki-pencil fs-7"></i>
+							<input type="file" name="SiteFavIcon" accept=".png, .jpg, .jpeg, .svg" />
+							<input type="hidden" name="avatar_remove" />
+						</label>
+						<span class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-white shadow" data-kt-image-input-action="cancel" data-bs-toggle="tooltip" title="انصراف">
+							<i class="ki-outline ki-cross fs-2"></i>
+						</span>
+						<span class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-white shadow" data-kt-image-input-action="remove" data-bs-toggle="tooltip" title="حذف آواتار">
+							<i class="ki-outline ki-cross fs-2"></i>
+						</span>
+					</div>
+					<div class="form-text">فایل‌های مجاز: png, jpg, jpeg.</div>
+				</div>
+			</div>
+			<div class="row mb-8">
+				<div class="col-xl-3">
+					<label asp-for="SiteName" class="control-label fs-6 fw-semibold mt-2 mb-3">@Html.DisplayNameFor(m => m.SiteName)</label>
+				</div>
+				<div class="col-xl-9 fv-row">
+					<input class="form-control form-control-solid" asp-for="SiteName" type="text" value="@Model.SiteName" />
+				</div>
+			</div>
+			<div class="row mb-8">
+				<div class="col-xl-3">
+					<label asp-for="SiteTitle" class="control-label fs-6 fw-semibold mt-2 mb-3">@Html.DisplayNameFor(m => m.SiteTitle)</label>
+				</div>
+				<div class="col-xl-9 fv-row">
+					<input class="form-control form-control-solid" asp-for="SiteTitle" type="text" value="@Model.SiteTitle" />
+				</div>
+			</div>
+			<div class="row mb-8">
+				<div class="col-xl-3">
+					<label asp-for="SiteDescription" class="control-label fs-6 fw-semibold mt-2 mb-3">@Html.DisplayNameFor(m => m.SiteDescription)</label>
+				</div>
+				<div class="col-xl-9 fv-row">
+					<input class="form-control form-control-solid" asp-for="SiteDescription" value="@Model.SiteDescription" />
+				</div>
+			</div>
+			<div class="row mb-8">
+				<div class="col-xl-3">
+					<label asp-for="IsMultilingual" class="control-label fs-6 fw-semibold mt-2 mb-3"></label>
+				</div>
+				<div class="col-xl-9 fv-row">
+					<div class="form-check form-switch form-check-custom form-check-solid">
+						<input class="form-check-input" asp-for="IsMultilingual" />
+						<label class="form-check-label fw-semibold text-gray-500 ms-3" asp-for="IsMultilingual">فعالسازی</label>
+					</div>
+				</div>
+			</div>
+			<div class="row mb-8">
+				<div class="col-xl-3">
+					<label asp-for="Languages" class="control-label fs-6 fw-semibold mt-2 mb-3"></label>
+				</div>
+				<div class="col-xl-9 fv-row">
+					<select name="DefaultLanguage" id="DefaultLanguage" class="form-select mb-2" data-control="select2" data-hide-search="true" data-placeholder="زبان خود را انتخاب کنید" data-allow-clear="true">
+						@{
+							var langs = (List<Tuple<string, string, string, string, string, string>>)ViewBag.Languages;
+							var def = ViewBag.DefaultLanguage;
+						}
+						<option></option>
+						@foreach (var lang in langs)
+						{
+							if (def == lang.Item3)
+							{
+								<option value="@lang.Item3" data-select2-language="@lang.Item6" selected="selected">@Html.Raw($"{lang.Item2}({lang.Item1})")</option>
+							}
+							else
+							{
+								<option value="@lang.Item3" data-select2-language="@lang.Item6">@Html.Raw($"{lang.Item2}({lang.Item1})")</option>
+							}
+						}
+					</select>
+				</div>
+			</div>
+			<div class="row mb-8">
+				<div class="col-xl-3">
+					<label asp-for="Languages" class="control-label fs-6 fw-semibold mt-2 mb-3"></label>
+				</div>
+				<div class="col-xl-9 fv-row">
+					<select name="Languages" id="Languages" class="form-select mb-2" data-default="@ViewBag.DefaultLanguage" data-control="select2" data-hide-search="true" data-placeholder="زبان خود را انتخاب کنید" data-allow-clear="true" multiple="multiple">
+						<option></option>
+						@foreach (var lang in langs)
+						{
+							if (Model.Languages != null && Model.Languages.Contains(lang.Item3))
+							{
+								<option value="@lang.Item3" data-select2-language="@lang.Item6" selected="selected">@Html.Raw($"{lang.Item2}({lang.Item1})")</option>
+							}
+							else
+							{
+								<option value="@lang.Item3" data-select2-language="@lang.Item6">@Html.Raw($"{lang.Item2}({lang.Item1})")</option>
+							}
+						}
+					</select>
+				</div>
+			</div>
+			<div class="row mb-8">
+				<div class="col-xl-3">
+					<label asp-for="AllowRegistration" class="control-label fs-6 fw-semibold mt-2 mb-3">@Html.DisplayNameFor(m => m.AllowRegistration)</label>
+				</div>
+				<div class="col-xl-9 fv-row">
+					<div class="form-check form-switch form-check-custom form-check-solid">
+						<input class="form-check-input" asp-for="AllowRegistration" />
+						<label class="form-check-label fw-semibold text-gray-500 ms-3" asp-for="AllowRegistration">فعالسازی</label>
+					</div>
+				</div>
+			</div>
+			<div class="row mb-8">
+				<div class="col-xl-3">
+					<label asp-for="MobileRegisteration" class="control-label fs-6 fw-semibold mt-2 mb-3">@Html.DisplayNameFor(m => m.MobileRegisteration)</label>
+				</div>
+				<div class="col-xl-9">
+					<div class="form-check form-switch form-check-custom form-check-solid">
+						<input class="form-check-input" asp-for="MobileRegisteration" />
+						<label class="form-check-label fw-semibold text-gray-500 ms-3" asp-for="MobileRegisteration">فعالسازی</label>
+					</div>
+				</div>
+			</div>
+			<div class="row mb-8">
+				<div class="col-xl-3">
+					<label asp-for="SendEmailConfirmation" class="control-label fs-6 fw-semibold mt-2 mb-3">@Html.DisplayNameFor(m => m.SendEmailConfirmation)</label>
+				</div>
+				<div class="col-xl-9 fv-row">
+					<div class="form-check form-switch form-check-custom form-check-solid">
+						<input class="form-check-input" asp-for="SendEmailConfirmation" />
+						<label class="form-check-label fw-semibold text-gray-500 ms-3" asp-for="SendEmailConfirmation">فعالسازی</label>
+					</div>
+				</div>
+			</div>
+			<div class="row mb-8">
+				<div class="col-xl-3">
+					<label asp-for="SendPhoneConfirmation" class="control-label fs-6 fw-semibold mt-2 mb-3">@Html.DisplayNameFor(m => m.SendPhoneConfirmation)</label>
+				</div>
+				<div class="col-xl-9 fv-row">
+					<div class="form-check form-switch form-check-custom form-check-solid">
+						<input class="form-check-input" asp-for="SendPhoneConfirmation" />
+						<label class="form-check-label fw-semibold text-gray-500 ms-3" asp-for="SendPhoneConfirmation">فعالسازی</label>
+					</div>
+				</div>
+			</div>
+			<div class="row mb-8">
+				<div class="col-xl-3">
+					<label asp-for="CryptoApiToken" class="control-label fs-6 fw-semibold mt-2 mb-3"></label>
+				</div>
+				<div class="col-xl-9 fv-row">
+					<input class="form-control form-control-solid" asp-for="CryptoApiToken" type="text" value="@Model.CryptoApiToken" />
+				</div>
+			</div>
+
+			@* <div class="row mb-8">
+                <div class="col-xl-3">
+                    <div class="fs-6 fw-semibold mt-2 mb-3">Notifications</div>
+                </div>
+                <div class="col-xl-9">
+                    <div class="d-flex fw-semibold h-100">
+                        <div class="form-check form-check-custom form-check-solid me-9">
+                            <input class="form-check-input" type="checkbox" value="" id="email" />
+                            <label class="form-check-label ms-3" for="email">Email</label>
+                        </div>
+                        <div class="form-check form-check-custom form-check-solid">
+                            <input class="form-check-input" type="checkbox" value="" id="phone" checked="checked" />
+                            <label class="form-check-label ms-3" for="phone">Phone</label>
+                        </div>
+                    </div>
+                </div>
+            </div> *@
+		</div>
+		<div class="card-footer d-flex justify-content-end py-6 px-9">
+			<button type="submit" class="btn btn-primary" id="kt_project_settings_submit">ذخیره تغییرات</button>
+		</div>
+	</form>
+</div>
+
+@section scripts{
+	<script type="text/javascript">
+		$(document).ready(function(){
+			var optionFormat = function(item) {
+				if ( !item.id ) return item.text;
+				var span = document.createElement('span'),
+				imgUrl = item.element.getAttribute('data-select2-language'),
+				template = `<img src="${imgUrl}" class="rounded-circle h-20px me-2" alt="image"/> ${item.text}`;
+				span.innerHTML = template;
+				return $(span);
+			}
+
+			$('#Languages').select2({
+				templateSelection: optionFormat,
+				templateResult: optionFormat
+			});
+			$('#DefaultLanguage').select2({
+				templateSelection: optionFormat,
+				templateResult: optionFormat
+			});
+		});
+	</script>
+}

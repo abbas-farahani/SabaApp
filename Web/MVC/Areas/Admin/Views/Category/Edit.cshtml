@@ -1,0 +1,45 @@
+﻿@model CategoryVM
+
+<div class="card card-flush py-4">
+    <form asp-action="edit" class="edit-category sluggable">
+        <div class="card-body pt-0">
+            <div class="mb-10 fv-row">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="Label" class="control-label"></label>
+                    <input asp-for="Label" class="form-control sluggable" data-type="tax" data-generator="off" />
+                    <span asp-validation-for="Label" class="text-danger"></span>
+                </div>
+                <partial name="~/areas/admin/views/shared/PartialViews/_SlugFormPV.cshtml" model="Model.Slug" />
+                <div class="form-group">
+                    <label asp-for="ParentId" class="control-label"></label>
+                    <select asp-for="ParentId" class="form-control" asp-items="ViewBag.ParentId"></select>
+                    <span asp-validation-for="ParentId" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Description" class="control-label"></label>
+                    <input asp-for="Description" class="form-control" />
+                    <span asp-validation-for="Description" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                </div>
+            </div>
+        </div>
+        <div class="card-footer">
+            <input type="submit" value="افزودن دسته بندی" class="btn btn-primary" />
+        </div>
+    </form>
+</div>
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script type="text/javascript">
+        $(document).ready(function(){
+            var target = document.querySelector('.slug-preview');
+            var blockUI = (KTBlockUI.getInstance(target) != null) ? KTBlockUI.getInstance(target) : new KTBlockUI(target);
+            $('.slug-anchor').text($('input[name=Slug]').val());
+            $('.slug-container').removeClass('d-none');
+        });
+    </script>
+}

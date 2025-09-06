@@ -1,0 +1,89 @@
+﻿@{
+	bool isRTL = CultureInfo.CurrentUICulture.TextInfo.IsRightToLeft;
+	string lang = CultureInfo.CurrentUICulture.TwoLetterISOLanguageName;
+}
+
+<div class="container">
+	<div class="footer-widgets-wrap">
+		<div class="row col-mb-50 footer-inner">
+				@if (lang.StartsWith("en"))
+				{
+					<div class="col-md-4">
+						<div class="widget">
+							<div class="pb-5">
+								<address>
+									<strong>Company Address:</strong><br>
+									Valiasr Street, not reaching the Parkway, opposite Esteghlal Hotel Street, Fakhreddini Alley (former Horizon), No. 4, Unit 2<br>
+								</address>
+								<abbr title="Postal Code"><strong>Postal Code:</strong></abbr> 1966613690<br>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="widget">
+							<div class="pb-5">
+								<abbr title="Phone Number"><strong>Phone:</strong></abbr>(+98) 21 26219615<br>
+								<abbr title="Phone Number"><strong>Phone:</strong></abbr> (+98) 21 26219327<br>
+								<abbr title="Email Address"><strong>Email:</strong></abbr> info@sabatrade.ir<br>
+								<abbr title="Email Address"><strong>Contact Management:</strong></abbr> shirali@sabatrade.ir
+							</div>
+						</div>
+					</div>
+				}
+				else if (lang.StartsWith("ar"))
+				{
+					<div class="col-md-4">
+						<div class="widget">
+							<div class="pb-5">
+								<address>
+									<strong>عنوان الشركة:</strong><br>
+									شارع وليعصر، بالقرب من طريق باركواي، مقابل فندق الاستقلال، زقاق فخر الدين (أفق سابقًا)، رقم 4، الوحدة 2.<br>
+								</address>
+								<abbr title="الرمز البريدي"><strong>الرمز البريدي:</strong></abbr> 1966613690<br>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="widget">
+							<div class="pb-5">
+								<abbr title="رقم الهاتف"><strong>الهاتف:</strong></abbr>(+98) 21 26219615<br>
+								<abbr title="الهاتف الرقم <strong>الهاتف:</strong></abbr> (+98) 21 26219327<br>
+							<abbr title="عنوان البريد الإلكتروني"><strong>البريد الإلكتروني:</strong></abbr> info@sabatrade.ir<br>
+								<abbr title="عنوان البريد الإلكتروني"><strong>إدارة الاتصال:</strong></abbr> shirali@sabatrade.ir
+							</div>
+						</div>
+					</div>
+				}
+				else
+				{
+					<div class="col-md-4">
+						<div class="widget">
+							<div class="pb-5">
+								<address>
+									<strong>آدرس شرکت:</strong><br>
+									خیابان ولیعصر، نرسیده به پارک وی، روبروی خیابان هتل استقلال، کوچه فخرالدینی (افق سابق)، پلاک4،  واحد2<br>
+								</address>
+								<abbr title="Postal Code"><strong>کدپستی:</strong></abbr> 1966613690<br>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="widget">
+							<div class="pb-5">
+								<abbr title="Phone Number"><strong>تلفن:</strong></abbr>(+98) 21 26219615<br>
+								<abbr title="Phone Number"><strong>تلفن:</strong></abbr> (+98) 21 26219327<br>
+								<abbr title="Email Address"><strong>پست الکترونیک:</strong></abbr> info@sabatrade.ir<br>
+								<abbr title="Email Address"><strong>ارتباط با مدیریت:</strong></abbr> shirali@sabatrade.ir
+							</div>
+						</div>
+					</div>
+				}
+				<div class="col-md-4">
+					<div class="widget">
+						<div class="pb-5"></div>
+					</div>
+				</div>
+		</div>
+	</div><!-- .footer-widgets-wrap end -->
+</div>
+

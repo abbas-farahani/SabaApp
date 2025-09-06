@@ -1,0 +1,23 @@
+﻿@{
+    var title = "";
+    string siteName = await _optionService.GetByName("SiteName");
+    if (String.IsNullOrEmpty(siteName)) title = "";
+    else title = $"{siteName} - {ViewData["Title"]}";
+}
+<title>@Html.Raw(title)</title>
+<meta charset="utf-8" />
+<meta name="description" content="@Html.Raw(await _optionService.GetByName("SiteDescription"))" />
+<meta name="keywords" content="@Html.Raw(await _optionService.GetByName("SeoKeywords"))" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta property="og:locale" content="@Html.Raw(await _optionService.GetByName("SeoOgLocale"))" />
+<meta property="og:type" content="@Html.Raw(await _optionService.GetByName("SeoOgType"))" />
+<meta property="og:title" content="@Html.Raw(await _optionService.GetByName("SeoOgTitle"))" />
+<meta property="og:url" content="@Html.Raw(await _optionService.GetByName("SeoOgUrl"))" />
+<meta property="og:site_name" content="@Html.Raw(await _optionService.GetByName("SeoOgSiteName"))" />
+<link rel="shortcut icon" href="/media/logos/demo57.svg" />
+<link href="~/plugins/admin/custom/fullcalendar/fullcalendar.bundle.css" rel="stylesheet" type="text/css" />
+<link href="~/plugins/admin/custom/datatables/datatables.bundle.rtl.css" rel="stylesheet" type="text/css" />
+<link href="~/plugins/admin/global/plugins.bundle.rtl.css" rel="stylesheet" type="text/css" />
+<link href="~/css/admin/style.bundle.rtl.css" rel="stylesheet" type="text/css" />
+<link href="~/css/admin/admin.css" rel="stylesheet" type="text/css" />
+<script>// Frame-busting to prevent site from being loaded within a frame without permission (click-jacking) if (window.top != window.self) { window.top.location.replace(window.self.location.href); }</script>

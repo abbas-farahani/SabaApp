@@ -1,0 +1,19 @@
+﻿<title>@(Html.Raw(await _optionService.GetByName("SiteName")) ?? ViewData["Title"])</title>
+<meta charset="utf-8" />
+<meta name="description" content="@Html.Raw(await _optionService.GetByName("SiteDescription"))" />
+<meta name="keywords" content="@Html.Raw(await _optionService.GetByName("SeoKeywords"))" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta property="og:locale" content="@Html.Raw(await _optionService.GetByName("SeoOgLocale"))" />
+<meta property="og:type" content="@Html.Raw(await _optionService.GetByName("SeoOgType"))" />
+<meta property="og:title" content="@Html.Raw(await _optionService.GetByName("SeoOgTitle"))" />
+<meta property="og:url" content="@Html.Raw(await _optionService.GetByName("SeoOgUrl"))" />
+<meta property="og:site_name" content="@Html.Raw(await _optionService.GetByName("SeoOgSiteName"))" />
+@* <!--link rel="canonical" href="http://index.html" /--> *@
+<link rel="shortcut icon" href="@Html.Raw(await _optionService.GetByName("SiteFavIcon"))" />
+<link href="~/plugins/dashboard/custom/fullcalendar/fullcalendar.bundle.css" rel="stylesheet" type="text/css" />
+<link href="~/plugins/dashboard/custom/datatables/datatables.bundle.css" rel="stylesheet" type="text/css" />
+<link href="~/plugins/dashboard/global/plugins.bundle.css" rel="stylesheet" type="text/css" />
+<link href="~/css/dashboard/style.bundle.rtl.css" rel="stylesheet" type="text/css" />
+<link href="~/css/site.css" rel="stylesheet" />
+<link href="~/css/dashboard/site.css" rel="stylesheet" />
+<script>// Frame-busting to prevent site from being loaded within a frame without permission (click-jacking) if (window.top != window.self) { window.top.location.replace(window.self.location.href); }</script>

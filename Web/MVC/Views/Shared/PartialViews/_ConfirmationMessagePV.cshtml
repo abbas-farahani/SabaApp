@@ -1,0 +1,22 @@
+﻿@{
+    if (TempData["SuccessMessage"] != null)
+    {
+        <script type="text/javascript">
+            ConfirmationMessage('@(TempData["SuccessMessage"])', 'success');
+        </script>
+    }
+
+    if (TempData["ErrorMessage"] != null)
+    {
+        <script type="text/javascript">
+            ConfirmationMessage('@(TempData["ErrorMessage"])', 'error');
+        </script>
+    }
+
+    if (TempData["InfoMessage"] != null)
+    {
+        <script type="text/javascript">
+            ConfirmationMessage('@(TempData["InfoMessage"])', 'info');
+        </script>
+    }
+}

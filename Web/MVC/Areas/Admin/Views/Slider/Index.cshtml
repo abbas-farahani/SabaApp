@@ -1,0 +1,138 @@
+﻿@model List<SliderVM>
+
+<div class="card card-flush h-xl-100">
+	<div class="card-header pt-5">
+		<h3 class="card-title align-items-start flex-column">
+			<span class="card-label fw-bold text-gray-800">مدیریت اسلایدر</span>
+			<span class="text-gray-500 pt-1 fw-semibold fs-6">لیست @Model.Count() اسلایدر</span>
+		</h3>
+		<div class="card-toolbar">
+		</div>
+	</div>
+	<div class="card-body py-3">
+		<div class="table-responsive">
+			<table class="table table-row-dashed align-middle gs-0 gy-4">
+				<thead>
+					<tr class="fs-7 fw-bold border-0 text-gray-500">
+						<th class="min-w-200px" colspan="2">نام اسلایدر</th>
+						<th class="min-w-100px text-end pe-0" colspan="2">تعداد اسلاید</th>
+						<th class="min-w-100px text-end pe-0" colspan="2">تاریخ تغییرات</th>
+						<th class="text-end min-w-100px" colspan="2">عملیات</th>
+					</tr>
+				</thead>
+				<tbody>
+					@foreach (var slider in Model)
+					{
+						<tr class="@Html.Raw($"row-item-{slider.Id}")">
+							<td class="" colspan="2">
+								<a asp-action="details" asp-route-id="@slider.Id" class="text-gray-800 fw-bold text-hover-primary mb-1 fs-6">@Html.Raw(slider.Title)</a>
+							</td>
+							<td class="pe-0" colspan="2">
+								<div class="d-flex justify-content-end">
+									<span class="text-gray-800 fw-bold fs-6">@slider.Slides.Count() اسلاید</span>
+								</div>
+							</td>
+							<td class="pe-0" colspan="2">
+								<div class="d-flex justify-content-end">
+									<span class="text-gray-800 fw-bold fs-6">@slider.CreationTime.ToString("yyyy/MM/dd HH:mm")</span>
+									@if (slider.LastModified != null)
+									{
+										<span class="text-danger min-w-50px d-block text-end fw-bold fs-6">آخرین تغییر: @slider.LastModified.Value.ToString("yyyy/MM/dd HH:mm")</span>
+									}
+								</div>
+							</td>
+							<td class="" colspan="2">
+								<div class="d-flex justify-content-end">
+									<a asp-action="details" asp-route-id="@slider.Id" class="btn btn-icon btn-bg-light btn-active-color-warning btn-sm me-1">
+										<i class="ki-outline ki-slider-horizontal-2 fs-2"></i>
+									</a>
+									<a asp-action="editslider" asp-route-id="@slider.Id" class="btn btn-icon btn-bg-light btn-active-color-warning btn-sm me-1">
+										<i class="ki-outline ki-pencil fs-2"></i>
+									</a>
+									<a href="#" data-id="@slider.Id" data-action="slider" class="btn btn-icon btn-bg-light btn-active-color-danger btn-sm me-1 delete-slider">
+										<i class="ki-outline ki-trash fs-2"></i>
+									</a>
+								</div>
+							</td>
+						</tr>
+					}
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>
+
+
+@section scripts {
+	<script type="text/javascript">
+		$(document).ready(function () {
+			$(document).on('click', '.delete-slider', function (e) {
+				DeleteSlider($(this).data('id'), $(this).data('action'))
+			});
+		});
+
+
+		function DeleteSlider(id, action) {
+			if (id == null) return;
+			Swal.mixin({
+				customClass: {
+					confirmButton: "btn btn-success",
+					cancelButton: "btn btn-danger",
+				},
+				buttonStyling: false
+			}).fire({
+				//icon: 'info',
+				title: 'آیا از حذف آیتم انتخاب شده مطمئن هستید؟',
+				position: 'bottom-end',
+				// showClass: {
+				// 	popup: `
+				// 				animate__animated
+				// 				animate__fadeInUp
+				// 				animate__faster
+				// 			`
+				// },
+				// hideClass: {
+				// 	popup: `
+				// 				animate__animated
+				// 				animate__fadeOutDown
+				// 				animate__faster
+				// 			`
+				// },
+				showConfirmButton: true,
+				showCancelButton: true,
+				cancelButtonText: 'انصراف',
+				confirmButtonText: 'بله، حذف کن',
+				width: 460
+			}).then((result) => {
+				if (result.isConfirmed) {
+					$.ajax({
+						type: 'post',
+						url: `${action}/deleteslider`,
+						data: { id: id },
+						contextType: 'application/json; charset=utf-8',
+						dataType: 'json',
+						headers: {
+							"X-XSRF-TOKEN": token
+						},
+						beforeSend: function () {
+						},
+						success: function (data) {
+							if (data.result) {
+								ConfirmationMessage("حذف با موفقیت انجام شد", "success");
+								$(`.row-item-${id}`).remove();
+							} else {
+								ConfirmationMessage("حذف با خطا مواجه شد", "error");
+							}
+						},
+						complete: function () {
+						},
+						error: function (e) {
+							console.log(e);
+							ConfirmationMessage("خطایی رخ داد", "error");
+						}
+					});
+				}
+			});
+		}
+	</script>
+}

@@ -1,0 +1,38 @@
+﻿@model Core.Domain.Entities.Attachment
+
+
+<div class="card card-flush py-4">
+	<partial name="PartialViews/_UploaderPV.cshtml" />
+</div>
+
+
+@*     <div class="dropzone dropzone-queue px-8 py-4" id="media-uploader" data-kt-inbox-form="dropzone">
+        <div class="dropzone-items">
+            <div class="dropzone-item" style="display:none">
+                <div class="dropzone-file">
+                    <div class="dropzone-filename" title="some_image_file_name.jpg">
+                        <span data-dz-name="">some_image_file_name.jpg</span>
+                        <strong>
+                            (
+                            <span data-dz-size="">340kb</span>)
+                        </strong>
+                    </div>
+                    <div class="dropzone-error" data-dz-errormessage=""></div>
+                </div>
+                <div class="dropzone-progress">
+                    <div class="progress bg-gray-300">
+                        <div class="progress-bar bg-primary" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" data-dz-uploadprogress=""></div>
+                    </div>
+                </div>
+                <div class="dropzone-toolbar">
+                    <span class="dropzone-delete" data-dz-remove="">
+                        <i class="ki-outline ki-cross fs-2"></i>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div> *@
+
+@section Scripts {
+	<script src="~/js/admin/custom/filemanager/scripts.js"></script>
+}

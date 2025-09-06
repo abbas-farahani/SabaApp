@@ -1,0 +1,38 @@
+﻿@{
+	var title = "";
+	string siteName = await _optionService.GetByName("SiteName");
+	if (String.IsNullOrEmpty(siteName)) title = ViewData["Title"] != null ? $"{ViewData["Title"]}" : "";
+	else title = $"{siteName} - {ViewData["Title"]}";
+	bool isRTL = CultureInfo.CurrentUICulture.TextInfo.IsRightToLeft;
+}
+
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<meta http-equiv="x-ua-compatible" content="IE=edge">
+<meta name="author" content="SemiColonWeb">
+<meta name="description" content="@Html.Raw(await _optionService.GetByName("SiteDescription"))" />
+<meta name="keywords" content="@Html.Raw(await _optionService.GetByName("SeoKeywords"))" />
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<meta http-equiv="x-ua-compatible" content="IE=edge">
+<meta property="og:locale" content="@Html.Raw(await _optionService.GetByName("SeoOgLocale"))" />
+<meta property="og:type" content="@Html.Raw(await _optionService.GetByName("SeoOgType"))" />
+<meta property="og:title" content="@Html.Raw(await _optionService.GetByName("SeoOgTitle"))" />
+<meta property="og:url" content="@Html.Raw(await _optionService.GetByName("SeoOgUrl"))" />
+<meta property="og:site_name" content="@Html.Raw(await _optionService.GetByName("SeoOgSiteName"))" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="shortcut icon" href="@Html.Raw(await _optionService.GetByName("SiteFavIcon"))" />
+
+@if (isRTL)
+{
+	<link rel="stylesheet" href="~/css/corporate/style-rtl.css">
+}
+else
+{
+	<link rel="stylesheet" href="~/css/corporate/style.css">
+}
+<link rel="stylesheet" href="~/css/corporate/font-icons.css">
+<link rel="stylesheet" href="~/css/corporate/custom.css">
+
+<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+<link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+<link rel="stylesheet" href="~/MVC.styles.css" asp-append-version="true" />
+<title>@Html.Raw(title)</title>

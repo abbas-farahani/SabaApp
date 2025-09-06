@@ -1,0 +1,78 @@
+﻿@{
+	string lang = CultureInfo.CurrentUICulture.TwoLetterISOLanguageName;
+}
+
+<div id="copyrights">
+	<div class="container">
+		<div class="row col-mb-30">
+			<div class="col-md-6 text-center text-md-start pb-0 d-flex align-items-center">
+				<img src="~/media/corporate/logo-dark.png" style="width:75px;" alt="Image" class="footer-logo mb-0">
+				@if (lang.StartsWith("en"))
+				{
+					<div class="ms-3">
+						Copyright &copy; @DateTime.Now.ToString("yyyy") All rights reserved by Sabatraded<br>
+						<div class="copyright-links"><a href="#">Terms and Conditions</a> / <a href="#">Privacy Policy</a></div>
+					</div>
+				}
+				else if (lang.StartsWith("ar"))
+				{
+					<div class="ms-3">
+						جميع الحقوق محفوظة لشركة صبا ترید &copy; @DateTime.Now.ToString("yyyy")
+						<div class="copyright-links"><a href="#">الشروط والأحكام</a> / <a href="#">سياسة الخصوصية</a></div>
+					</div>
+				}
+				else
+				{
+					<div class="ms-3">
+						کپی رایت &copy; @DateTime.Now.ToString("yyyy") تمام حقوق متعلق به صباترید است<br>
+						<div class="copyright-links"><a href="#">قوانین و شرایط</a> / <a href="#">سیاست حفظ حریم خصوصی</a></div>
+					</div>
+				}
+			</div>
+			<div class="col-md-6 text-center text-md-end pb-0">
+				<div class="d-flex justify-content-center justify-content-md-end mb-2">
+					<a href="#" class="social-icon border-transparent si-small h-bg-facebook">
+						<i class="fa-brands fa-facebook-f"></i>
+						<i class="fa-brands fa-facebook-f"></i>
+					</a>
+
+					<a href="#" class="social-icon border-transparent si-small h-bg-x-twitter">
+						<i class="fa-brands fa-x-twitter"></i>
+						<i class="fa-brands fa-x-twitter"></i>
+					</a>
+
+					<a href="#" class="social-icon border-transparent si-small h-bg-google">
+						<i class="fa-brands fa-google"></i>
+						<i class="fa-brands fa-google"></i>
+					</a>
+
+					<a href="#" class="social-icon border-transparent si-small h-bg-pinterest">
+						<i class="fa-brands fa-pinterest-p"></i>
+						<i class="fa-brands fa-pinterest-p"></i>
+					</a>
+
+					<a href="#" class="social-icon border-transparent si-small h-bg-vimeo">
+						<i class="fa-brands fa-vimeo-v"></i>
+						<i class="fa-brands fa-vimeo-v"></i>
+					</a>
+
+					<a href="#" class="social-icon border-transparent si-small h-bg-github">
+						<i class="fa-brands fa-github"></i>
+						<i class="fa-brands fa-github"></i>
+					</a>
+
+					<a href="#" class="social-icon border-transparent si-small h-bg-yahoo">
+						<i class="fa-brands fa-yahoo"></i>
+						<i class="fa-brands fa-yahoo"></i>
+					</a>
+
+					<a href="#" class="social-icon border-transparent si-small me-0 h-bg-linkedin">
+						<i class="fa-brands fa-linkedin"></i>
+						<i class="fa-brands fa-linkedin"></i>
+					</a>
+				</div>
+				<i class="bi-envelope"></i> info@sabatrade.ir <span class="middot">&middot;</span> <i class="fa-solid fa-phone"></i> +98-21-26219615 <span class="middot">&middot;</span>
+			</div>
+		</div>
+	</div>
+</div><!-- #copyrights end -->

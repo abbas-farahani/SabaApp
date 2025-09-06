@@ -1,0 +1,65 @@
+﻿@model Post
+<div class="card card-flush py-4">
+    <div class="card-header">
+        <div class="card-title">
+            <h2>وضعیت انتشار</h2>
+        </div>
+        <div class="card-toolbar">
+            <div class="rounded-circle bg-success w-15px h-15px" id="kt_ecommerce_add_product_status"></div>
+        </div>
+    </div>
+    <div class="card-body pt-0">
+        <div>
+            <input asp-for="Status" class="form-control" />
+            <select class="form-select mb-2" id="kt_ecommerce_add_product_status_select" data-control="select2" data-hide-search="true" data-placeholder="Select an option">
+                <option></option>
+                <option value="published" selected="selected">منتشرشده</option>
+                <option value="draft">پیش‌نویس</option>
+                <option value="scheduled">زمان‌بندی</option>
+                <option value="private">خصوصی</option>
+            </select>
+            <input asp-for="CommentStatus" class="form-control" />
+            <span asp-validation-for="Status" class="text-danger"></span>
+            <div class="text-muted fs-7">وضعیت انتشار نوشته خود را مشخص کنید.</div>
+            <div class="d-none my-10">
+                <label for="kt_ecommerce_add_product_status_datepicker" class="form-label">Select publishing date and time</label>
+                <input class="form-control" id="kt_ecommerce_add_product_status_datepicker" placeholder="Pick date & time" />
+            </div>
+            @if (Model != null)
+            {
+                <div class="mt-5">
+                    <label asp-for="CreationTime"></label>
+                    <span class="fs-7 fw-bold">@Model.CreationTime.ToString("dddd yyyy/MM/dd HH:mm:ss")</span>
+                </div>
+            }
+            @if (Model != null && Model.LastModified != null)
+            {
+                <div class="mt-5">
+                    <label asp-for="LastModified"></label>
+                    <span class="fs-7 fw-bold">@Model.LastModified.Value.ToString("dddd yyyy/MM/dd HH:mm:ss")</span>
+                </div>
+            }
+        </div>
+        <div>
+            <label asp-for="CommentStatus"></label>
+            <select class="form-select mb-2" id="kt_ecommerce_add_product_status_select" data-control="select2" data-hide-search="true" data-placeholder="Select an option">
+                <option></option>
+                <option value="open" selected="selected">آزاد</option>
+                <option value="close">بسته</option>
+                <option value="private">کاربران عضو</option>
+            </select>
+            <span asp-validation-for="Status" class="text-danger"></span>
+            <div class="text-muted fs-7">وضعیت امکان ارسال دیدگاه را مشخص کنید.</div>
+        </div>
+    </div>
+    <div class="card-footer d-flex justify-content-end">
+        <a href="@Url.Action("index")" class="btn btn-danger me-5 product_cancel">حذف</a>
+        <button type="submit" id="kt_ecommerce_add_product_submit" class="btn btn-primary">
+            <span class="indicator-label">ذخیره تغییرات</span>
+            <span class="indicator-progress">
+                لطفا صبرکنید...
+                <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+            </span>
+        </button>
+    </div>
+</div>

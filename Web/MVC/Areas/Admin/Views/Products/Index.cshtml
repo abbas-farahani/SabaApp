@@ -1,0 +1,201 @@
+﻿@model IEnumerable<Core.Domain.Entities.Shop.Product>
+@{
+	bool isMultilingual = (await _optionService.GetByName("IsMultilingual") == "true" ? true : false);
+	var langs = (List<Tuple<string, string, string, string, string, string>>)ViewBag.Languages;
+	string def = ViewBag.DefaultLanguage;
+}
+
+
+@if (Model.Count() == 0)
+{
+	await Html.RenderPartialAsync("_notfoundpv");
+}
+else
+{
+	<div class="card card-flush mt-6 mt-xl-9">
+		@* <div class="card-header mt-5">
+            <div class="card-title flex-column">
+                <h3 class="fw-bold mb-1">Project Spendings</h3>
+                <div class="fs-6 text-gray-500">Total $260,300 sepnt so far</div>
+            </div>
+            <div class="card-toolbar my-1">
+                <div class="me-6 my-1">
+                    <select id="kt_filter_year" name="year" data-control="select2" data-hide-search="true" class="w-125px form-select form-select-solid form-select-sm">
+                        <option value="All" selected="selected">All time</option>
+                        <option value="thisyear">This year</option>
+                        <option value="thismonth">This month</option>
+                        <option value="lastmonth">Last month</option>
+                        <option value="last90days">Last 90 days</option>
+                    </select>
+                </div>
+                <div class="me-4 my-1">
+                    <select id="kt_filter_orders" name="orders" data-control="select2" data-hide-search="true" class="w-125px form-select form-select-solid form-select-sm">
+                        <option value="All" selected="selected">All Orders</option>
+                        <option value="Approved">Approved</option>
+                        <option value="Declined">Declined</option>
+                        <option value="In Progress">In Progress</option>
+                        <option value="In Transit">In Transit</option>
+                    </select>
+                </div>
+                <div class="d-flex align-items-center position-relative my-1">
+                    <i class="ki-outline ki-magnifier fs-3 position-absolute ms-3"></i>
+                    <input type="text" id="kt_filter_search" class="form-control form-control-solid form-select-sm w-150px ps-9" placeholder="Search Order" />
+                </div>
+            </div>
+        </div> *@
+		<div class="card-body pt-0">
+			<div class="table-responsive">
+				<table id="kt_profile_overview_table" class="table table-row-bordered table-row-dashed gy-4 align-middle fw-bold">
+					<thead class="fs-7 text-gray-500 text-uppercase">
+						<tr>
+							<th class="min-w-250px">@Html.DisplayNameFor(model => model.Title)</th>
+							<th class="min-w-90px">@Html.DisplayNameFor(model => model.CommentStatus)</th>
+							<th class="min-w-50px text-end">@Html.DisplayNameFor(model => model.User.UserName)</th>
+							<th class="min-w-50px text-end">@Html.DisplayNameFor(model => model.ProductCats)</th>
+							<th class="min-w-50px text-end">@Html.DisplayNameFor(model => model.CreationTime)</th>
+							@if (isMultilingual)
+							{
+								<th class="min-w-50px text-end">ترجمه‌ها</th>
+							}
+							<th class="min-w-90px"></th>
+						</tr>
+					</thead>
+					<tbody class="fs-6">
+						@foreach (var item in Model)
+						{
+							<tr class="@Html.Raw($"row-item-{item.Id}")">
+								<td>
+									<div class="d-flex align-items-center">
+										<div class="symbol symbol-50px me-5">
+											@if (String.IsNullOrEmpty(item.FeaturedImage))
+											{
+												<img src="~/media/svg/files/blank-image.svg" class="" alt="" />
+											}
+											else
+											{
+												<img src="@Html.Raw(item.FeaturedImage)" class="" alt="" />
+											}
+										</div>
+										<div class="d-flex justify-content-start flex-column">
+											<div>
+												<a asp-action="edit" asp-route-id="@item.Id" class="text-gray-900 fw-bold text-hover-primary mb-1 fs-6">@Html.Raw(item.Title)</a>
+
+												@if (item.Status == 0)
+												{
+													<span class="badge badge-danger" title="@Html.DisplayNameFor(model => model.Status)">حذف شده</span>
+												}
+												else if (item.Status == 3)
+												{
+													<span class="badge badge-warning" title="@Html.DisplayNameFor(model => model.Status)">پیش نویس</span>
+												}
+												else if (item.Status == 4)
+												{
+													<span class="badge badge-info" title="@Html.DisplayNameFor(model => model.Status)">خصوصی</span>
+												}
+											</div>
+											<div class="d-flex">
+												@if (item.ProductCats != null)
+												{
+													foreach (var cat in item.ProductCats)
+													{
+														<a asp-action="details" asp-controller="category" asp-route-slug="@cat.Slug" class="text-muted fw-semibold fs-7">@Html.Raw(cat.Label)</a>
+													}
+												}
+											</div>
+										</div>
+									</div>
+								</td> <!-- End Title -->
+								<td>
+									@if (item.Reviews == null || item.Reviews.Count() == 0)
+									{
+										<span class="text-gray-900 fw-bold text-hover-primary mb-1 fs-6">بدون دیدگاه</span>
+									}
+									else
+									{
+										<a asp-action="index" asp-controller="comment" asp-route-id="@item.Id" class="text-gray-900 fw-bold text-hover-primary mb-1 fs-6">@item.Reviews.Count() دیدگاه</a>
+									}
+									<br />
+									@if (item.CommentStatus == 0)
+									{
+										<span class="text-muted fw-semibold text-muted d-block fs-7" title="وضعیت دیدگاه در این پست بسته شده است">بسته شده</span>
+									}
+									else if (item.CommentStatus == 2)
+									{
+										<span class="text-muted fw-semibold text-muted d-block fs-7" title="وضعیت دیدگاه در این پست فقط برای اعضای سایت امکانپذیر است">خصوصی</span>
+									}
+								</td> <!-- End Reviews -->
+								<td>
+									<a href="#" class="text-gray-900 fw-bold text-hover-primary mb-1 fs-6">@item.User.UserName</a>
+								</td> <!-- End Author -->
+								<td>
+									@if (item.ProductCats != null)
+									{
+										@foreach (var category in item.ProductCats)
+										{
+											<span class="text-gray-400 me-1" title="آخرین بروزرسانی">@category.Label</span>
+										}
+									}
+								</td> <!-- End Product Categories -->
+								<td>
+									@item.CreationTime.ToString("yyyy/MM/dd HH:mm:ss")
+									@if (item.LastModified != null)
+									{
+										<br />
+										<span class="text-gray-400" title="آخرین بروزرسانی">@item.LastModified.Value.ToString("yyyy/MM/dd HH:mm:ss")</span>
+									}
+								</td> <!-- End Creation Time -->
+								@if (isMultilingual)
+								{
+									var meta = item.ProductMetas.FirstOrDefault(x => x.MetaName == "Translation");
+									var translations = new Dictionary<string, int>();
+									if (meta != null) { translations = Newtonsoft.Json.JsonConvert.DeserializeObject<Dictionary<string, int>>(meta.MetaValue); }
+
+									<td>
+										@foreach (var lang in langs.Where(x => x.Item3 != def).ToList())
+										{
+											var translate = translations.FirstOrDefault(x => x.Key == lang.Item3);
+											if (translate.Key != null)
+											{ // Exist
+												<a asp-action="edit" asp-route-id="@(translate.Value)" class="symbol symbol-30px mx-3 rounded">
+													<img class="symbol-label" src="@(lang.Item6)" title="@lang.Item1" />
+													<span class="symbol-badge badge badge-circle bg-success top-100 start-100">
+														<i class="ki-outline ki-pencil text-white fs-7"></i>
+													</span>
+												</a>
+											}
+											else
+											{ //Not Exist
+												<a asp-action="create" title="@(lang.Item1)" class="symbol symbol-30px mx-3 rounded">
+													<img class="symbol-label" src="@(lang.Item6)" title="@lang.Item1" />
+													<span class="symbol-badge badge badge-circle bg-danger start-100">
+														<i class="ki-outline ki-plus text-white fs-7"></i>
+													</span>
+												</a>
+											}
+
+										}
+									</td>
+								}
+								<td class="text-end">
+									<a asp-action="singleproduct" asp-controller="shop" asp-area="" asp-route-slug="@item.Slug" class="btn btn-icon btn-bg-light btn-active-color-info btn-sm me-1" target="_blank">
+										<i class="ki-outline ki-eye fs-2"></i>
+									</a>
+									<a asp-action="edit" asp-controller="products" asp-area="admin" asp-route-id="@item.Id" class="btn btn-icon btn-bg-light btn-active-color-warning btn-sm me-1">
+										<i class="ki-outline ki-pencil fs-2"></i>
+									</a>
+									<a href="#" data-id="@item.Id" data-action="products" class="btn btn-icon btn-bg-light btn-active-color-danger btn-sm me-1 delete-request">
+										<i class="ki-outline ki-trash fs-2"></i>
+									</a>
+								</td> <!-- End Operations -->
+							</tr>
+						}
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+
+	@* @section Scripts {
+        <script src="~/js/admin/custom/account/posts.js"></script>
+    } *@
+}

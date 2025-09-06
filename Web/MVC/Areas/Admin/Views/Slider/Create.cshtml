@@ -1,0 +1,96 @@
+﻿@model SlideVM
+
+<form asp-action="create" method="post" class="">
+	<div class="card card-flush h-xl-100">
+		<div class="card-header pt-7">
+			<h3 class="card-title align-items-start flex-column">
+				<span class="card-label fw-bold text-gray-800">اسلاید جدید</span>
+				<span class="text-gray-500 mt-1 fw-semibold fs-6">ثبت اسلاید در @Html.Raw(Model.SliderName)</span>
+			</h3>
+			<div class="card-toolbar"></div>
+		</div>
+		<div class="card-body pt-5">
+			<div class="fv-row mb-10">
+				<label class="d-flex align-items-center fs-5 fw-semibold mb-2">
+					<span class="required">عنوان اسلایدر</span>
+				</label>
+				<input type="hidden" asp-for="SliderId" value="@ViewBag.SliderId" />
+				<input asp-for="Title" class="form-control form-control-lg form-control-solid" />
+			</div>
+
+			<div class="fv-row mb-10">
+				<label class="d-flex align-items-center fs-5 fw-semibold mb-2">
+					<span class="required">نام اسلایدر</span>
+				</label>
+				<input asp-for="Name" class="form-control form-control-lg form-control-solid" />
+			</div>
+
+			<div class="fv-row mb-10">
+				<label class="d-flex align-items-center fs-5 fw-semibold mb-2">
+					<span class="required">توضیحات</span>
+				</label>
+				<input asp-for="Description" class="form-control form-control-lg form-control-solid" />
+			</div>
+
+			<div class="fv-row mb-10">
+				<label class="d-flex align-items-center fs-5 fw-semibold mb-2">
+					<span class="required">نوع زمینه</span>
+				</label>
+				<select asp-for="BackgroundType" class="form-select form-select-solid" data-control="select2" data-placeholder="Select an option" data-hide-search="true">
+					<option></option>
+					<option value="image" selected>تصویر</option>
+					<option value="video">ویدئو</option>
+					<option value="color">رنگ</option>
+				</select>
+			</div>
+			<div class="fv-row mb-10">
+				<div class="image-type">
+					<div id="slider-cover" class="image-input image-input-empty image-input-outline image-input-placeholder mb-3" data-kt-image-input="true">
+						<div class="image-input-wrapper w-150px h-150px"></div>
+						<label class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow" data-kt-image-input-action="change" data-bs-toggle="tooltip" title="Change avatar">
+							<i class="ki-outline ki-pencil fs-7"></i>
+							<input type="file" name="avatar" accept=".png, .jpg, .jpeg" />
+							<input type="hidden" name="avatar_remove" />
+						</label>
+						<span class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow" data-kt-image-input-action="cancel" data-bs-toggle="tooltip" title="Cancel avatar">
+							<i class="ki-outline ki-cross fs-2"></i>
+						</span>
+						<span class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow" data-kt-image-input-action="remove" data-bs-toggle="tooltip" title="Remove avatar">
+							<i class="ki-outline ki-cross fs-2"></i>
+						</span>
+					</div>
+				</div>
+				<div class="video-type d-none">
+					<div class="dropzone" id="media-uploader">
+						<div class="dz-message needsclick">
+							<i class="ki-outline ki-file-up text-primary fs-3x"></i>
+							<div class="ms-4">
+								<h3 class="fs-5 fw-bold text-gray-900 mb-1">فایل ویدئوی خود را در اینجا بندازید</h3>
+								<span class="fs-7 fw-semibold text-gray-500"></span>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="color-type d-none">
+					<div class="input-group input-group-solid input-group-lg mb-5">
+						<span class="input-group-text">#</span>
+						<input type="color" name="color-value" class="form-control" />
+						<input type="text" id="hexInput" name="hexInput" readonly class="form-control" />
+					</div>
+				</div>
+
+				<input type="hidden" asp-for="BackgroundValue" />
+			</div>
+
+
+		</div>
+		<div class="card-footer">
+			<input type="submit" name="submit" class="btn btn-success" value="ایجاد اسلایدر" />
+		</div>
+	</div>
+</form>
+
+@section scripts {
+	<script src="~/js/admin/custom/slider/scripts.js"></script>
+}

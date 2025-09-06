@@ -1,0 +1,36 @@
+﻿@inject Microsoft.AspNetCore.Antiforgery.IAntiforgery _antiforgery
+
+@{
+	bool isRTL = CultureInfo.CurrentUICulture.TextInfo.IsRightToLeft;
+	string lang = CultureInfo.CurrentUICulture.TwoLetterISOLanguageName;
+}
+<!DOCTYPE html>
+<html dir="@(isRTL? "rtl" :"ltr")" direction="@(isRTL? "rtl" :"ltr")" lang="@lang">
+<head>
+	<partial name="partialviews/_headpv" />
+	<meta name="_token" content="@(_antiforgery.GetAndStoreTokens(Context).RequestToken)" />
+	@await RenderSectionAsync("Styles", required: false)
+</head>
+<body id="kt_body" class="header-fixed header-tablet-and-mobile-fixed aside-fixed aside-secondary-disabled">
+	<script>var defaultThemeMode = "light"; var themeMode; if ( document.documentElement ) { if ( document.documentElement.hasAttribute("data-bs-theme-mode")) { themeMode = document.documentElement.getAttribute("data-bs-theme-mode"); } else { if ( localStorage.getItem("data-bs-theme") !== null ) { themeMode = localStorage.getItem("data-bs-theme"); } else { themeMode = defaultThemeMode; } } if (themeMode === "system") { themeMode = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"; } document.documentElement.setAttribute("data-bs-theme", themeMode); }</script>
+	<div class="d-flex flex-column flex-root">
+		<div class="page d-flex flex-row flex-column-fluid">
+			<partial name="partialviews/_sidebarpv" />
+			<div class="wrapper d-flex flex-column flex-row-fluid" id="kt_wrapper">
+
+				<partial name="partialviews/_headerpv" />
+
+				<div class="content d-flex flex-column flex-column-fluid" id="kt_content">
+					@RenderBody()
+				</div>
+
+				<partial name="partialviews/_footerpv" />
+
+			</div>
+		</div>
+	</div>
+	<partial name="partialviews/_bodyfooterpv" />
+	@await RenderSectionAsync("Scripts", required: false)
+	@await Html.PartialAsync("~/Views/Shared/PartialViews/_ConfirmationMessagePV.cshtml")
+</body>
+</html>

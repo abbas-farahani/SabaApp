@@ -1,0 +1,138 @@
+﻿@model IEnumerable<PageVM>
+@{
+	bool isMultilingual = (await _optionService.GetByName("IsMultilingual") == "true" ? true : false);
+	var langs = (List<Tuple<string, string, string, string, string, string>>)ViewBag.Languages;
+	string def = ViewBag.DefaultLanguage;
+}
+
+@if (Model.Count() == 0)
+{
+	await Html.RenderPartialAsync("_notfoundpv");
+}
+else
+{
+	<div class="card card-flush mt-6 mt-xl-9">
+		@*  <div class="card-header mt-5">
+            <div class="card-title flex-column">
+                <h3 class="fw-bold mb-1">Project Spendings</h3>
+                <div class="fs-6 text-gray-500">Total $260,300 sepnt so far</div>
+            </div>
+            <div class="card-toolbar my-1">
+            </div>
+        </div> *@
+		<div class="card-body pt-0">
+			<div class="table-responsive">
+				<table id="kt_profile_overview_table" class="table table-row-bordered table-row-dashed gy-4 align-middle fw-bold">
+					<thead class="fs-7 text-gray-500 text-uppercase">
+						<tr>
+							<th class="min-w-250px">@Html.DisplayNameFor(model => model.Title)</th>
+							<th class="min-w-50px text-end">@Html.DisplayNameFor(model => model.UserName)</th>
+							<th class="min-w-50px text-end">@Html.DisplayNameFor(model => model.CreationTime)</th>
+							@if (isMultilingual)
+							{
+								<th class="min-w-50px text-end">ترجمه‌ها</th>
+							}
+							<th class="min-w-90px"></th>
+						</tr>
+					</thead>
+					<tbody class="fs-6">
+						@foreach (var item in Model)
+						{
+							<tr class="@Html.Raw($"row-item-{item.Id}")">
+								<td>
+									<div class="d-flex align-items-center">
+										<div class="symbol symbol-50px me-5">
+											<img src="~/media/stock/600x400/img-26.jpg" class="" alt="" />
+										</div>
+										<div class="d-flex justify-content-start flex-column">
+											<div>
+												<a asp-action="edit" asp-route-id="@item.Id" class="text-gray-900 fw-bold text-hover-primary mb-1 fs-6">@Html.Raw(item.Title)</a>
+
+												@if (item.Status == "deleted")// 0
+												{
+													<span class="badge badge-danger" title="@Html.DisplayNameFor(model => model.Status)">حذف شده</span>
+												}
+												else if (item.Status == "published") // 1
+												{
+													<span class="badge badge-info" title="@Html.DisplayNameFor(model => model.Status)">منتشرشده</span>
+												}
+												else if (item.Status == "draft") // 3
+												{
+													<span class="badge badge-warning" title="@Html.DisplayNameFor(model => model.Status)">پیش نویس</span>
+												}
+												else if (item.Status == "private") // 4
+												{
+													<span class="badge badge-info" title="@Html.DisplayNameFor(model => model.Status)">خصوصی</span>
+												}
+												else // 5
+												{
+													<span class="badge badge-info" title="@Html.DisplayNameFor(model => model.Status)">زمان‌بندی شده</span>
+												}
+											</div>
+											<span class="text-muted fw-semibold text-muted d-block fs-7">Categories</span>
+										</div>
+									</div>
+								</td> <!-- End Title -->
+								<td>@Html.DisplayFor(modelItem => item.UserName)</td> <!-- End Author -->
+								<td>
+									@item.CreationTime.Value.ToString("yyyy/MM/dd HH:mm:ss")
+									@if (item.LastModified != null)
+									{
+										<br />
+										<span class="text-gray-400" title="آخرین بروزرسانی">@item.LastModified.Value.ToString("yyyy/MM/dd HH:mm:ss")</span>
+									}
+								</td> <!-- End Creation Time -->
+								@if (isMultilingual)
+								{
+									var translations = new Dictionary<string, int>();
+									if (!string.IsNullOrEmpty(item.Translations)) { translations = Newtonsoft.Json.JsonConvert.DeserializeObject<Dictionary<string, int>>(item.Translations); }
+
+									<td>
+										@foreach (var lang in langs.Where(x => x.Item3 != def).ToList())
+										{
+											var translate = translations.FirstOrDefault(x => x.Key == lang.Item3);
+											if (translate.Key != null)
+											{ // Exist
+												<a asp-action="edit" asp-route-id="@(translate.Value)" class="symbol symbol-30px mx-3 rounded">
+													<img class="symbol-label" src="@(lang.Item6)" title="@lang.Item1" />
+													<span class="symbol-badge badge badge-circle bg-success top-100 start-100">
+														<i class="ki-outline ki-pencil text-white fs-7"></i>
+													</span>
+												</a>
+											}
+											else
+											{ //Not Exist
+												<a asp-action="create" title="@(lang.Item1)" class="symbol symbol-30px mx-3 rounded">
+													<img class="symbol-label" src="@(lang.Item6)" title="@lang.Item1" />
+													<span class="symbol-badge badge badge-circle bg-danger start-100">
+														<i class="ki-outline ki-plus text-white fs-7"></i>
+													</span>
+												</a>
+											}
+
+										}
+									</td>
+								}
+								<td class="text-end">
+									<a asp-action="singlepage" asp-controller="home" asp-route-slug="@item.Slug" class="btn btn-icon btn-bg-light btn-active-color-info btn-sm me-1" target="_blank">
+										<i class="ki-outline ki-eye fs-2"></i>
+									</a>
+									<a asp-action="edit" asp-route-id="@item.Id" class="btn btn-icon btn-bg-light btn-active-color-warning btn-sm me-1">
+										<i class="ki-outline ki-pencil fs-2"></i>
+									</a>
+									<a href="#" data-id="@item.Id" data-action="page" class="btn btn-icon btn-bg-light btn-active-color-danger btn-sm me-1 delete-request">
+										<i class="ki-outline ki-trash fs-2"></i>
+									</a>
+								</td> <!-- End Operations -->
+							</tr>
+						}
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+
+	@* @section Scripts {
+        <script src="~/js/admin/custom/account/posts.js"></script>
+    } *@
+}

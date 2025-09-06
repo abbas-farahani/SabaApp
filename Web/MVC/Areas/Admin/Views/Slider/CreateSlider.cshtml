@@ -1,0 +1,36 @@
+﻿
+
+<form asp-action="createslider" method="post" class="">
+	<div class="card card-flush h-xl-100">
+		<div class="card-header pt-7">
+			<h3 class="card-title align-items-start flex-column">
+				<span class="card-label fw-bold text-gray-800">اسلایدر جدید</span>
+				<span class="text-gray-500 mt-1 fw-semibold fs-6">ثبت اسلایدر</span>
+			</h3>
+			<div class="card-toolbar"></div>
+		</div>
+		<div class="card-body pt-5">
+			<div class="fv-row mb-10">
+				<label class="d-flex align-items-center fs-5 fw-semibold mb-2">
+					<span class="required">عنوان اسلایدر</span>
+					<span class="ms-1" data-bs-toggle="tooltip" title="">
+						<i class="ki-outline ki-information-5 text-gray-500 fs-6"></i>
+					</span>
+				</label>
+				<input type="text" class="form-control form-control-lg form-control-solid" name="title" />
+			</div>
+			<div class="fv-row mb-10">
+				<label class="d-flex align-items-center fs-5 fw-semibold mb-2">
+					<span class="required">نام اسلایدر</span>
+					<span class="ms-1" data-bs-toggle="tooltip" title="">
+						<i class="ki-outline ki-information-5 text-gray-500 fs-6"></i>
+					</span>
+				</label>
+				<input type="text" class="form-control form-control-lg form-control-solid" name="name" />
+			</div>
+		</div>
+		<div class="card-footer">
+			<input type="submit" name="submit" class="btn btn-success" value="ایجاد اسلایدر" />
+		</div>
+	</div>
+</form>

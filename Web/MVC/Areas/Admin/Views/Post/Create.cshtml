@@ -1,0 +1,378 @@
+﻿@model PostVM
+@section Styles {
+	<style>
+		#post-thumbnail.image-input-placeholder {
+			background-image: url('/media/svg/files/blank-image.svg');
+		}
+
+		[data-bs-theme="dark"] #post-thumbnail.image-input-placeholder {
+			background-image: url('/media/svg/files/blank-image-dark.svg');
+		}
+	</style>
+}
+<form class="form d-flex flex-column flex-lg-row new-post sluggable" asp-action="create" asp-controller="post" asp-area="admin" method="post">
+    <div class="d-flex flex-column flex-row-fluid gap-7 gap-lg-10 me-lg-10 mb-7 mb-lg-0 mw-lg-900px">
+		@* <ul class="nav nav-custom nav-tabs nav-line-tabs nav-line-tabs-2x border-0 fs-4 fw-semibold mb-n2">
+            <li class="nav-item">
+                <a class="nav-link text-active-primary pb-4 active" data-bs-toggle="tab" href="#new_post_general">عمومی</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-active-primary pb-4" data-bs-toggle="tab" href="#new_post_advanced">پیشرفته</a>
+            </li>
+        </ul> *@
+		<div class="tab-content">
+			<div class="tab-pane fade show active" id="new_post_general" role="tab-panel">
+				<div class="d-flex flex-column gap-7 gap-lg-10">
+					<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+					<div class="card card-flush py-4">
+						<div class="card-body pt-0">
+							<div class="mb-2 fv-row">
+								<label asp-for="Title" class="required form-label"></label>
+								<span class="text-muted fs-7">@Html.GetPropertyDescription(m => m.Title)</span>
+								<input asp-for="Title" class="form-control mb-2 sluggable" placeholder="عنوان نوشته" data-type="tax" data-generator="on" />
+								<span asp-validation-for="Title" class="text-danger"></span>
+                                <div class="fv-row slug-container d-none">
+                                    <div class="d-flex slug-preview">
+                                        <span class="me-2">نامک: </span>
+                                        <a href="#" class="fs-6 me-2 text-primary slug-anchor"></a>
+                                        <span class="cursor-pointer text-dark change-slug">ویرایش</span>
+                                    </div>
+                                    <div class="d-none custom-slug-form">
+                                        <div class="d-flex align-items-center">
+                                            <span>
+                                                <i class="ki-outline ki-fasten fs-2x text-primary me-4"></i>
+                                            </span>
+                                            <input asp-for="Slug" data-value="@Model" placeholder="نامک را وارد کنید" class="form-control slug-input mw-250px me-3" />
+                                            <button class="btn btn-icon btn-light-primary me-3 custom-slug-submit">
+                                                <span class="indicator-label">
+                                                    <i class="ki-outline ki-check fs-1"></i>
+                                                </span>
+                                                <span class="indicator-progress">
+                                                    <span class="spinner-border spinner-border-sm align-middle"></span>
+                                                </span>
+                                            </button>
+                                            <button class="btn btn-icon btn-light-danger custom-slug-cancel">
+                                                <span class="indicator-label">
+                                                    <i class="ki-outline ki-cross fs-1"></i>
+                                                </span>
+                                                <span class="indicator-progress">
+                                                    <span class="spinner-border spinner-border-sm align-middle"></span>
+                                                </span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+							</div>
+
+							<div>
+								<div class="py-5" data-bs-theme="light">
+                                    <textarea asp-for="Content" class="post-classic-editor"></textarea>
+								</div>
+								<span asp-validation-for="Content" class="text-danger"></span>
+							</div>
+						</div>
+					</div>
+					@* <div class="card card-flush py-4">
+                        <div class="card-header">
+                            <div class="card-title">
+                                <h2>رسانه</h2>
+                            </div>
+                        </div>
+                        <div class="card-body pt-0">
+                            <div class="fv-row mb-2">
+                                <partial name="~/areas/admin/views/media/PartialViews/_UploaderPV.cshtml" />
+                            </div>
+                            <div class="text-muted fs-7">Set the product media gallery.</div>
+                        </div>
+                    </div> *@
+				</div>
+			</div>
+			@* <div class="tab-pane fade" id="new_post_advanced" role="tab-panel">
+                <div class="d-flex flex-column gap-7 gap-lg-10">
+                    <div class="card card-flush py-4">
+                        <div class="card-header">
+                            <div class="card-title">
+                                <h2>Inventory</h2>
+                            </div>
+                        </div>
+                        <div class="card-body pt-0">
+                            <div class="mb-10 fv-row">
+                                <label class="required form-label">SKU</label>
+                                <input type="text" name="sku" class="form-control mb-2" placeholder="SKU Number" value="" />
+                                <div class="text-muted fs-7">Enter the product SKU.</div>
+                            </div>
+                            <div class="mb-10 fv-row">
+                                <label class="required form-label">Barcode</label>
+                                <input type="text" name="barcode" class="form-control mb-2" placeholder="Barcode Number" value="" />
+                                <div class="text-muted fs-7">Enter the product barcode number.</div>
+                            </div>
+                            <div class="mb-10 fv-row">
+                                <label class="required form-label">Quantity</label>
+                                <div class="d-flex gap-3">
+                                    <input type="number" name="shelf" class="form-control mb-2" placeholder="On shelf" value="" />
+                                    <input type="number" name="warehouse" class="form-control mb-2" placeholder="In warehouse" />
+                                </div>
+                                <div class="text-muted fs-7">Enter the product quantity.</div>
+                            </div>
+                            <div class="fv-row">
+                                <label class="form-label">Allow Backorders</label>
+                                <div class="form-check form-check-custom form-check-solid mb-2">
+                                    <input class="form-check-input" type="checkbox" value="" />
+                                    <label class="form-check-label">Yes</label>
+                                </div>
+                                <div class="text-muted fs-7">Allow customers to purchase products that are out of stock.</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card card-flush py-4">
+                        <div class="card-header">
+                            <div class="card-title">
+                                <h2>Variations</h2>
+                            </div>
+                        </div>
+                        <div class="card-body pt-0">
+                            <div class="" data-kt-ecommerce-catalog-add-product="auto-options">
+                                <label class="form-label">Add Product Variations</label>
+                                <div id="kt_ecommerce_add_product_options">
+                                    <div class="form-group">
+                                        <div data-repeater-list="kt_ecommerce_add_product_options" class="d-flex flex-column gap-3">
+                                            <div data-repeater-item="" class="form-group d-flex flex-wrap align-items-center gap-5">
+                                                <div class="w-100 w-md-200px">
+                                                    <select class="form-select" name="product_option" data-placeholder="Select a variation" data-kt-ecommerce-catalog-add-product="product_option">
+                                                        <option></option>
+                                                        <option value="color">Color</option>
+                                                        <option value="size">Size</option>
+                                                        <option value="material">Material</option>
+                                                        <option value="style">Style</option>
+                                                    </select>
+                                                </div>
+                                                <input type="text" class="form-control mw-100 w-200px" name="product_option_value" placeholder="Variation" />
+                                                <button type="button" data-repeater-delete="" class="btn btn-sm btn-icon btn-light-danger">
+                                                    <i class="ki-outline ki-cross fs-1"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group mt-5">
+                                        <button type="button" data-repeater-create="" class="btn btn-sm btn-light-primary">
+                                            <i class="ki-outline ki-plus fs-2"></i>Add another variation
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card card-flush py-4">
+                        <div class="card-header">
+                            <div class="card-title">
+                                <h2>Shipping</h2>
+                            </div>
+                        </div>
+                        <div class="card-body pt-0">
+                            <div class="fv-row">
+                                <div class="form-check form-check-custom form-check-solid mb-2">
+                                    <input class="form-check-input" type="checkbox" id="kt_ecommerce_add_product_shipping_checkbox" value="1" />
+                                    <label class="form-check-label">This is a physical product</label>
+                                </div>
+                                <div class="text-muted fs-7">Set if the product is a physical or digital item. Physical products may require shipping.</div>
+                            </div>
+                            <div id="kt_ecommerce_add_product_shipping" class="d-none mt-10">
+                                <div class="mb-10 fv-row">
+                                    <label class="form-label">Weight</label>
+                                    <input type="text" name="weight" class="form-control mb-2" placeholder="Product weight" value="" />
+                                    <div class="text-muted fs-7">Set a product weight in kilograms (kg).</div>
+                                </div>
+                                <div class="fv-row">
+                                    <label class="form-label">Dimension</label>
+                                    <div class="d-flex flex-wrap flex-sm-nowrap gap-3">
+                                        <input type="number" name="width" class="form-control mb-2" placeholder="Width (w)" value="" />
+                                        <input type="number" name="height" class="form-control mb-2" placeholder="Height (h)" value="" />
+                                        <input type="number" name="length" class="form-control mb-2" placeholder="Lengtn (l)" value="" />
+                                    </div>
+                                    <div class="text-muted fs-7">Enter the product dimensions in centimeters (cm).</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card card-flush py-4">
+                        <div class="card-header">
+                            <div class="card-title">
+                                <h2>Meta Options</h2>
+                            </div>
+                        </div>
+                        <div class="card-body pt-0">
+                            <div class="mb-10">
+                                <label class="form-label">Meta Tag Title</label>
+                                <input type="text" class="form-control mb-2" name="meta_title" placeholder="Meta tag name" />
+                                <div class="text-muted fs-7">Set a meta tag title. Recommended to be simple and precise keywords.</div>
+                            </div>
+                            <div class="mb-10">
+                                <label class="form-label">Meta Tag Description</label>
+                                <div id="kt_ecommerce_add_product_meta_description" name="kt_ecommerce_add_product_meta_description" class="min-h-100px mb-2"></div>
+                                <div class="text-muted fs-7">Set a meta tag description to the product for increased SEO ranking.</div>
+                            </div>
+                            <div>
+                                <label class="form-label">Meta Tag Keywords</label>
+                                <input id="kt_ecommerce_add_product_meta_keywords" name="kt_ecommerce_add_product_meta_keywords" class="form-control mb-2" />
+                                <div class="text-muted fs-7">
+                                    Set a list of keywords that the product is related to. Separate the keywords by adding a comma
+                                    <code>,</code>between each keyword.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div> *@
+		</div>
+	</div>
+	<div class="d-flex flex-column gap-7 gap-lg-10 w-100 w-lg-300px">
+        <div class="card card-flush py-4 translation-card">
+            <div class="card-header">
+                <div class="card-title">
+                    <h2>ترجمه</h2>
+                </div>
+            </div>
+            <div class="card-body py-0">
+                <div class="mb-2">
+                    <select name="LanguagesList" id="LanguagesList" class="form-select mb-2" data-default="@ViewBag.DefaultLanguage" data-control="select2" data-hide-search="true" data-placeholder="زبان محصول را تعیین کنید" data-allow-clear="true">
+                        @{
+                            var langs = (List<Tuple<string, string, string, string, string, string>>)ViewBag.Languages;
+                            var def = ViewBag.DefaultLanguage;
+                        }
+                        @foreach (var lang in langs)
+                        {
+                            if (def == lang.Item3)
+                            {
+                                <option value="@lang.Item3" data-kt-select2-country="@lang.Item6" selected="selected">@Html.Raw($"{lang.Item2}({lang.Item1})")</option>
+                            }
+                            else
+                            {
+                                <option value="@lang.Item3" data-kt-select2-country="@lang.Item6">@Html.Raw($"{lang.Item2}({lang.Item1})")</option>
+                            }
+                        }
+                    </select>
+                </div>
+                <div class="mb-2">
+                    <select name="OriginalArticle" id="OriginalArticle" class="form-select mb-2" asp-items="ViewBag.OriginalIds" data-control="select2" data-hide-search="true" data-placeholder="مقاله اصلی را تعیین کنید" data-allow-clear="true"></select>
+                </div>
+            </div>
+            <div class="card-footer"></div>
+        </div> <!-- Translation Management -->
+
+		<div class="card card-flush py-4">
+			<div class="card-header">
+				<div class="card-title">
+					<h2>وضعیت انتشار</h2>
+				</div>
+				<div class="card-toolbar">
+					<div class="rounded-circle bg-success w-15px h-15px" id="new-post-status-bullet"></div>
+				</div>
+			</div>
+			<div class="card-body py-0">
+				<div class="mb-2">
+					<select asp-for="Status" class="form-select mb-2" data-control="select2" data-hide-search="true">
+						<option value="published" selected="selected">منتشرشده</option>
+						<option value="draft">پیش‌نویس</option>
+						<option value="scheduled">زمان‌بندی</option>
+						<option value="private">خصوصی</option>
+					</select>
+
+					<span asp-validation-for="Status" class="text-danger"></span>
+					<div class="text-muted fs-7">وضعیت انتشار نوشته خود را مشخص کنید.</div>
+					<div class="d-none my-10">
+						<label for="new-post-datepicker" class="form-label">تاریخ انتشار را انتخاب کنید</label>
+						<input class="form-control" id="new-post-datepicker" placeholder="یک تاریخ انتخاب کنید" />
+					</div>
+					@* <div class="mt-5">
+                        <label asp-for="CreationTime"></label>
+                        <span class="fs-7 fw-bold">@DateTime.Now.ToString("dddd yyyy/MM/dd HH:mm:ss")</span>
+                    </div>
+                    <div class="mt-5">
+                        <label asp-for="LastModified"></label>
+                        <span class="fs-7 fw-bold">@DateTime.Now.ToString("dddd yyyy/MM/dd HH:mm:ss")</span>
+                    </div> *@
+				</div>
+				<div>
+					<label asp-for="CommentStatus"></label>
+					<select asp-for="CommentStatus" class="form-select mb-2" id="new-post-comment-status" data-control="select2" data-hide-search="true" data-placeholder="Select an option">
+						<option></option>
+						<option value="open" selected="selected">آزاد</option>
+						<option value="close">بسته</option>
+						<option value="private">کاربران عضو</option>
+					</select>
+					<span asp-validation-for="Status" class="text-danger"></span>
+					<div class="text-muted fs-7">وضعیت امکان ارسال دیدگاه را مشخص کنید.</div>
+				</div>
+			</div>
+            <div class="card-footer pt-2 text-end pt-0">
+				<a href="@Url.Action("index")" class="btn btn-danger post-cancel">حذف</a>
+				<button type="submit" id="kt_ecommerce_add_product_submit" class="btn btn-primary">
+					<span class="indicator-label">ذخیره تغییرات</span>
+					<span class="indicator-progress">
+						لطفا صبرکنید...
+						<span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+					</span>
+				</button>
+			</div>
+        </div> <!-- Publishment Status -->
+
+		<div class="card card-flush py-4">
+			<div class="card-header">
+				<div class="card-title">
+					<h2>تصویر نوشته</h2>
+				</div>
+			</div>
+			<div class="card-body text-center pt-0">
+				<div id="post-thumbnail" class="image-input image-input-empty image-input-outline image-input-placeholder mb-3" data-kt-image-input="true">
+					<div class="image-input-wrapper w-150px h-150px"></div>
+					<label class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow" data-kt-image-input-action="change" data-bs-toggle="tooltip" title="Change avatar">
+						<i class="ki-outline ki-pencil fs-7"></i>
+						<input type="file" name="avatar" accept=".png, .jpg, .jpeg" />
+						<input type="hidden" name="avatar_remove" />
+						<input asp-for="ThumbPath" type="hidden"/>
+                        <input asp-for="ThumbName" type="hidden"/>
+					</label>
+					<span class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow" data-kt-image-input-action="cancel" data-bs-toggle="tooltip" title="Cancel avatar">
+						<i class="ki-outline ki-cross fs-2"></i>
+					</span>
+					<span class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow" data-kt-image-input-action="remove" data-bs-toggle="tooltip" title="Remove avatar">
+						<i class="ki-outline ki-cross fs-2"></i>
+					</span>
+				</div>
+				<div class="text-muted fs-7">Set the product thumbnail image. Only *.png, *.jpg and *.jpeg image files are accepted</div>
+			</div>
+        </div> <!-- Featured image -->
+
+		<div class="card card-flush py-4">
+			<div class="card-header">
+				<div class="card-title">
+					<h2>دسته بندی</h2>
+				</div>
+			</div>
+			<div class="card-body pt-0">
+				<label class="form-label">موضوعات</label>
+				<select asp-for="CategoriesId" class="form-select mb-2" asp-items="ViewBag.CategoriesId" data-control="select2" data-placeholder="Select an option" data-allow-clear="true" multiple="multiple"></select>
+
+				<div class="text-muted fs-7 mb-7">نوشته خود را در یک موضوع ثبت کنید</div>
+				<a asp-controller="category" asp-action="create" asp-area="admin" class="btn btn-light-primary btn-sm mb-10" target="_blank">
+					<i class="ki-outline ki-plus fs-2"></i>دسته بندی جدید
+				</a>
+				@* <label class="form-label d-block">برچسب‌ها</label>
+                <input id="kt_ecommerce_add_product_tags" name="kt_ecommerce_add_product_tags" class="form-control mb-2" value="" />
+                <div class="text-muted fs-7">برچسبی برای نوشته خود انتخاب کنید</div> *@
+			</div>
+        </div> <!-- Categories and Tags -->
+	</div>
+</form>
+
+@section Scripts {
+	<script src="~/plugins/admin/custom/ckeditor/ckeditor-classic.bundle.js"></script>
+	<script src="~/js/admin/editor.js"></script>
+	@* <script src="~/plugins/admin/custom/formrepeater/formrepeater.bundle.js"></script> *@
+	@* <script src="~/js/admin/custom/apps/ecommerce/catalog/save-product.js"></script> *@
+	<script src="~/js/admin/custom/filemanager/scripts.js"></script>
+	<script src="~/js/admin/custom/posts/scripts.js"></script>
+	@{
+		await Html.RenderPartialAsync("_ValidationScriptsPartial");
+	}
+}

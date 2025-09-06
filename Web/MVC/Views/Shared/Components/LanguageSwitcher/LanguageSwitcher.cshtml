@@ -1,0 +1,24 @@
+﻿@model List<Tuple<string, string, string, string, string, string>>
+@if (Model != null)
+{
+	var currentLanguage = new CultureInfo((string)ViewBag.CurrentLanguage);
+	var currentLangTuple = Model.Find(x => x.Item3.StartsWith(currentLanguage.Name));
+
+	<li class="menu-item" title="">
+		<a href="#" class="menu-link">
+			<img src="@currentLangTuple.Item6" class="rounded-3 me-2 h-auto" alt="@Html.Raw(currentLanguage.DisplayName)" title="@Html.Raw(currentLanguage.NativeName)" style="width: 25px;" />
+		</a>
+		<ul class="sub-menu-container" style="right: -100% !important;">
+			@foreach (var lang in Model)
+			{
+				var culture = new CultureInfo(lang.Item3);
+				<li class="menu-item">
+					<a asp-action="changelanguage" asp-controller="home" asp-route-lang="@culture.Name" class="menu-link">
+						<img src="@lang.Item6" class="rounded-3 me-2 h-auto" alt="@Html.Raw(culture.DisplayName)" title="@Html.Raw(culture.DisplayName)" style="width: 25px;" />
+						@Html.Raw(culture.NativeName)
+					</a>
+				</li>
+			}
+		</ul>
+	</li>
+}

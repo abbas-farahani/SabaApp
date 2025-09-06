@@ -1,0 +1,61 @@
+﻿@model List<Core.Domain.Entities.Post>
+
+@if (Model == null)
+{
+	<div class="container">
+		<div class="alert alert-danger">
+			<i class="bi-x-circle-fill"></i><strong>با عرض پوزش</strong> در حال حاضر مقاله‌ای موجود نیست
+		</div>
+	</div>
+}
+else
+{
+	<div class="content-wrap">
+		<div class="container">
+			<div id="posts" class="post-grid row gutter-20">
+
+				@foreach (var post in Model)
+				{
+					var thumb = @post.PostMetas.FirstOrDefault(x => x.MetaName == "ThumbPath");
+					<div class="entry col-lg-3 col-md-4 col-sm-6 col-12">
+						<div class="grid-inner">
+							<div class="entry-image">
+								<a asp-action="singlepost" asp-controller="home" asp-route-slug="@Html.Raw(post.Slug)" data-lightbox="image"><img src="@(thumb!=null? thumb.MetaValue : "/media/svg/files/blank-image.svg")" alt="@Html.Raw(post.Title)"></a>
+							</div>
+							<div class="entry-title">
+								<h2><a asp-action="singlepost" asp-controller="home" asp-route-slug="@Html.Raw(post.Slug)">@Html.Raw(post.Title)</a></h2>
+							</div>
+							<div class="entry-meta">
+								<ul>
+									<li><i class="uil uil-schedule"></i> @post.CreationTime.ToString("yyyy/MM/dd")</li>
+									<li>
+										<a asp-action="singlepost" asp-controller="home" asp-route-slug="@Html.Raw(post.Slug)">
+											<i class="uil uil-comments-alt"></i> @(post.Comments != null ? post.Comments.Count() : "0")
+										</a>
+									</li>
+									<li><a href="#"><i class="uil uil-images"></i></a></li>
+								</ul>
+							</div>
+							<div class="entry-content">
+								<div>
+									@Html.Raw(post.Content.Length > 100 ? post.Content.Substring(0, 100) + "..." : post.Content)
+								</div>
+								<a asp-action="singlepost" asp-controller="home" asp-route-slug="@Html.Raw(post.Slug)" class="more-link">ادامه نوشته</a>
+							</div>
+						</div>
+					</div>
+				}
+			</div>
+			@* <ul class="pagination mt-5 pagination-circle justify-content-center">
+			<li class="page-item disabled"><a class="page-link" href="#"><i class="uil uil-angle-left-b"></i></a></li>
+			<li class="page-item active"><a class="page-link" href="#">1</a></li>
+			<li class="page-item"><a class="page-link" href="#">2</a></li>
+			<li class="page-item"><a class="page-link" href="#">3</a></li>
+			<li class="page-item"><a class="page-link" href="#">4</a></li>
+			<li class="page-item"><a class="page-link" href="#">5</a></li>
+			<li class="page-item"><a class="page-link" href="#"><i class="uil uil-angle-right-b"></i></a></li>
+		</ul> *@
+
+		</div>
+	</div>
+}

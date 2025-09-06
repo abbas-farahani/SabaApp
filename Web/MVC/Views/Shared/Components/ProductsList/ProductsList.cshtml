@@ -1,0 +1,45 @@
+﻿@model List<Core.Domain.Entities.Shop.Product>
+
+@if (Model != null && Model.Count() > 0)
+{
+	<div class="section my-0 ps-6">
+		<div class="container">
+			<div id="oc-products" class="owl-carousel products-carousel carousel-widget" data-pagi="false" data-items-xs="1" data-items-sm="2" data-items-md="3" data-items-lg="4">
+				@foreach (var product in Model)
+				{
+					<div class="oc-item">
+						<div class="product">
+							<div class="product-image aspect-ratio-1 overflow-hidden">
+								<a asp-action="singleproduct" asp-controller="shop" asp-route-slug="@product.Slug">
+									<img src="@Html.Raw(product.FeaturedImage != null ? product.FeaturedImage : "/media/svg/files/blank-image.svg")" alt="@Html.Raw(product.Title)">
+								</a>
+								<div class="bg-overlay">
+									<div class="bg-overlay-content align-items-end justify-content-between" data-hover-animate="fadeIn" data-hover-speed="400">
+										<a href="#" class="btn btn-dark me-2"><i class="icon-shopping-basket"></i></a>
+										<a href="include/ajax/shop-item.html" class="btn btn-dark" data-lightbox="ajax"><i class="icon-line-expand"></i></a>
+									</div>
+									<div class="bg-overlay-bg bg-transparent"></div>
+								</div>
+							</div>
+							<div class="product-desc center">
+								<div class="product-title">
+									<h3>
+										<a asp-action="singleproduct" asp-controller="shop" asp-route-slug="@product.Slug">@Html.Raw(product.Title)</a>
+									</h3>
+								</div>
+								<div class="product-price">@product.Price ریال</div>
+								<div class="product-rating">
+									<i class="icon-star3"></i>
+									<i class="icon-star3"></i>
+									<i class="icon-star3"></i>
+									<i class="icon-star3"></i>
+									<i class="icon-star-empty"></i>
+								</div>
+							</div>
+						</div>
+					</div>
+				}
+			</div>
+		</div>
+	</div>
+}

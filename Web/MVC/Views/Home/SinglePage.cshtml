@@ -1,0 +1,9 @@
+﻿@model MVC.Areas.Admin.Models.ViewModels.PageVM
+@{
+	ViewBag.Title = Model.Title;
+}
+<div class="content-wrap">
+	<div class="container">
+		@Html.Raw(Model.Content)
+	</div>
+</div>
